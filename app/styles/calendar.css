@@ -1,0 +1,46 @@
+.wrapWrap {
+  display: flex;
+}
+
+.weekWrapper {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 30px 0;
+}
+.dayWrapper {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(50px, 1fr));
+  min-height: 70vh;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+.weekItem {
+  font-weight: bold;
+  text-align: center;
+}
+.dayItem {
+  padding: 0.75rem;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  align-self: stretch;
+  cursor: pointer;
+}
+.sunday {
+  color: #ff5050;
+}
+.saturday {
+  color: #4472fc;
+}
+.otherMonth {
+  color: #c0c0c0;
+}
+.otherMonth.saturday {
+  color: #d5e6ff;
+}
+.otherMonth.sunday {
+  color: #ffd8e5;
+}
+.selected {
+  background: #f5eaffa9;
+  font-weight: 700;
+}

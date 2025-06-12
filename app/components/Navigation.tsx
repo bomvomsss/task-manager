@@ -1,19 +1,35 @@
 "use client";
-
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
+import Link from "next/link";
 
 export default function Navigation() {
   return (
-    <Navbar className='bg-body-tertiary px-3 mx-auto' expand='lg' sticky='top'>
-      <Container>
-        <Navbar.Brand href='/'>Task Manager</Navbar.Brand>
-      </Container>
-      <Container>
-        <Nav.Link href='/'>Main</Nav.Link>
-        <Nav.Link href='/'>Calendar</Nav.Link>
-        <Nav.Link href='/'>Dash Board</Nav.Link>
-        <Nav.Link href='/'>Analysis</Nav.Link>
-      </Container>
-    </Navbar>
+    <div id='navBar' className={"bg-body-tertiary"}>
+      <div className='brand'>
+        <h1>Task Manager</h1>
+      </div>
+      <Nav defaultActiveKey='/' className='flex-column'>
+        <Nav.Item>
+          <Nav.Link as={Link} className='py-3' href='/'>
+            Main
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} className='py-3' href='/calendar'>
+            Calendar
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} className='py-3' href='/dashboard'>
+            Dash Board
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} className='py-3' href='/'>
+            Analysis
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+    </div>
   );
 }

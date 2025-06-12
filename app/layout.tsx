@@ -12,6 +12,9 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Task Manager",
   description: "내가 쓰려고 만든 Task Manager",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -22,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={`${roboto.className}`}>
-        <Navigation />
-        {children}
+        <div id='mainWrap'>
+          <Navigation />
+          <main style={{ flex: 1 }}>{children}</main>
+        </div>
       </body>
     </html>
   );
