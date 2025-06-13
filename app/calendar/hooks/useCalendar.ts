@@ -20,9 +20,7 @@ const useCalendar = () => {
     currentDate,
     "yyyy-MM-dd"
   ).split("-");
-  const [selectedDate, setSelectedDate] = useState<string>(
-    format(new Date(), "yyyy-MM-dd")
-  );
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const startCurrentMonth = startOfMonth(currentDate);
   const endCurrentMonth = endOfMonth(currentDate);
@@ -49,7 +47,7 @@ const useCalendar = () => {
   };
 
   const handleSelectDate = (date: string) => {
-    setSelectedDate(date);
+    setSelectedDate((prev) => (prev === date ? "" : date));
   };
   const daysInMonth = days.map((day) => ({
     date: format(day, "yyyy-MM-dd"),

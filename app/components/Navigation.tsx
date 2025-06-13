@@ -24,11 +24,6 @@ export default function Navigation() {
             Dash Board
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link as={Link} className='py-3' href='/'>
-            Analysis
-          </Nav.Link>
-        </Nav.Item>
       </Nav>
     </div>
   );

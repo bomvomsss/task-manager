@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💎태스크 매니저
 
-## Getting Started
+## 💟개발 목적
 
-First, run the development server:
+실사용
+겸사겸사 포트폴리오도...
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 💟필요 기능
+
+1. 해야 할 일, 진행중, 테스트, 서버 반영 대기, 작업 완료 대시보드 구분
+2. 각 대시보드에서 태스크가 옮겨다닐 때 그 날짜와 시간이 저장됨
+3. 대시보드와 캘린더가 자동 연동, 할 일 -> 작업완료 대시보드 이동 일시 기록되어 자동으로 표기됨
+4. 커스텀 태그 및 레이블 등록으로 업무 종류 구분 가능
+5. 캘린더에서 트래그 앤 드랍으로 태스크 날짜 변경, 기간 설정 가능
+
+➡️나중에 작업하다가/사용하다가 필요한 기능 있으면 추가 가능
+
+## 💟서버 호스팅
+
+닷홈 무료 호스팅 사용. 추후 데이터가 쌓이거나 다른 사용자 유입(과연) 시 유료 전환 가능
+
+## 💟프론트엔드
+
+Next.js
+JSON 으로 테스트 데이터 적용
+[React-Bootstrap](https://react-bootstrap.netlify.app/docs/getting-started/introduction) 사용
+
+## 💟작업 기간 (계획)
+
+프론트 : 25.06.11 ~ 25.07.31
+백 : 그 이후
+
+## 폴더 구조
+
+### 달력
+
+[react로 달력 구현하기](https://velog.io/@rachel28/React-%EC%BA%98%EB%A6%B0%EB%8D%94%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EC%9E%90-feat.-date-fns)
+`calendar` 경로에 일정용 달력을 넣고, CalendarBody와 CalendarHeader 컴포넌트로 나누어서 page.tsx에 넣기.
+
+### Navigation
+
+`Navigation.tsx` 파일을 생성해서 `layout.tsx`에 import 하는데 계속
+
+```
+Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+라고 에러가 뜸
+뭘 어떻게 고쳐도 안되다가
+`Navigation.tsx` 컴포넌트 최상단에 `"use client"` 입력해주니 해-결
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Dash Board
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+// 👇 이건 named export
+export interface AddItemProps {
+  show: boolean;
+  item: TodoItemType | null;
+  onSave: (item: TodoItemType) => void;
+  onClose: () => void;
+  onDelete: (item: TodoItemType) => void;
+}
 
-## Learn More
+// 👇 이건 default export
+export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
+  const [text, setText] = useState("");
+  const [contents, setContents] = useState("");
+  const [tagInput, setTagInput] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+```
 
-To learn more about Next.js, take a look at the following resources:
+옳은 import 방법!
+`import useAddItems, { AddItemProps } from "../hooks/useAddItems";`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+참고
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> https://creative103.tistory.com/217 >[부트스트랩 클래스 이름 익히기](https://inpa.tistory.com/entry/BootStrap5-%F0%9F%93%9A-%EB%B6%80%ED%8A%B8%EC%8A%A4%ED%8A%B8%EB%9E%A9-%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84-%EC%A0%95%EB%A6%AC)

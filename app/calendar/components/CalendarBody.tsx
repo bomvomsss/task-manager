@@ -1,5 +1,5 @@
 "use client";
-import useCalendarContext from "./hooks/useCalendarContext";
+import useCalendarContext from "../hooks/useCalendarContext";
 import { Container } from "react-bootstrap";
 
 export default function CalendarBody() {
@@ -23,7 +23,8 @@ export default function CalendarBody() {
       <div className='dayWrapper'>
         {daysInMonth.map((date) => {
           const isCurrentMonth = currentDate.month === date.month;
-          const isSelectedDate = selectedDate.date === date.date;
+          const isSelectedDate = selectedDate?.date === date.date;
+          const isCurrentDay = currentDate.day === date.day;
           const isSunday = date.dayIndexOfWeek === 0;
           const isSatyrday = date.dayIndexOfWeek === 6;
 
@@ -33,6 +34,7 @@ export default function CalendarBody() {
             isSelectedDate ? "selected" : "",
             isSunday ? "sunday" : "",
             isSatyrday ? "saturday" : "",
+            isCurrentDay ? "today" : "",
           ]
             .filter(Boolean)
             .join(" ");
@@ -41,7 +43,7 @@ export default function CalendarBody() {
             <div
               onClick={() => selectedDate.selectDate(date.date)}
               className={classNames}
-              key={`dayItem-${date.date}`}
+              key={`dayItem-${date.year}-${date.month}-${date.day}`}
             >
               <span>{date.day}</span>
             </div>

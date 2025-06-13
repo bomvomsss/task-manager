@@ -1,5 +1,16 @@
-.wrapWrap {
+.container {
+  margin-top: 30px;
+}
+.calBtnGroup {
   display: flex;
+}
+.btnWrap {
+  display: flex;
+  align-items: center;
+}
+.btnWrap span {
+  font-size: 35px;
+  margin: 0 15px;
 }
 
 .weekWrapper {
@@ -43,4 +54,15 @@
 .selected {
   background: #f5eaffa9;
   font-weight: 700;
+}
+.today span {
+  background: #5e4387;
+  color: #fff;
+  padding: 5px 6px;
+  border-radius: 15px;
+}
+.addBtn {
+  margin-left: auto;
+  height: fit-content;
+  padding: 1px 5px;
 }

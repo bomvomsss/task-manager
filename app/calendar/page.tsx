@@ -1,7 +1,8 @@
 "use client";
 import "../styles/calendar.css";
-import CalendarBody from "./CalendarBody";
-import CalendarHeader from "./CalendarHeader";
+import CalendarBody from "./components/CalendarBody";
+import CalendarHeader from "./components/CalendarHeader";
+import SelectedDate from "./components/SelectedDate";
 import { CalendarContext } from "./hooks/useCalendarContext";
 import useCalendar from "./hooks/useCalendar";
 
@@ -12,6 +13,7 @@ export default function CalendarPage() {
     <CalendarContext.Provider value={calendar}>
       <CalendarHeader />
       <CalendarBody />
+      <SelectedDate />
     </CalendarContext.Provider>
   );
 }
