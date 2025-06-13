@@ -37,9 +37,12 @@
   align-items: baseline;
 }
 .modal-title {
-  width: 90%;
+  width: 100%;
 }
 .modal-header .btn-close {
   margin-left: 0;
   width: 10%;
+  position: absolute;
+  top: 25px;
+  right: 10px;
 }

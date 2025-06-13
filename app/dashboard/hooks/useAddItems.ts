@@ -27,12 +27,6 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
     if (item && text.trim() !== "") {
       onSave({ ...item, text });
     }
-    // if (item && contents.trim() !== "") {
-    //   setContents(contents);
-    // }
-    // if (item && tags.length !== 0) {
-    //   setTags(tags);
-    // }
   };
   const handleDelete = () => {
     if (item) {

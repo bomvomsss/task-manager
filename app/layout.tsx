@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./components/Navigation";
+import { TodoProvider } from "./context/TodoContext";
 
 const roboto = Roboto({
   weight: "400",
@@ -25,10 +26,12 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={`${roboto.className}`}>
-        <div id='mainWrap'>
-          <Navigation />
-          <main style={{ flex: 1 }}>{children}</main>
-        </div>
+        <TodoProvider>
+          <div id='mainWrap'>
+            <Navigation />
+            <main style={{ flex: 1 }}>{children}</main>
+          </div>
+        </TodoProvider>
       </body>
     </html>
   );

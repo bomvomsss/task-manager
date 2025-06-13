@@ -51,7 +51,6 @@ export default function AddItem({
             <option value='3'>Third</option>
             <option value='4'>Forth</option>
             <option value='5'>Fifth</option>
-            <option value='6'>Sixth</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className='mb-3' controlId='contentEditCtrl'>
@@ -71,7 +70,7 @@ export default function AddItem({
               type='text'
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
-              onKeyDown={handleKeyDown} // Enter 키 감지
+              onKeyDown={handleKeyDown}
               placeholder='태그를 입력하고 Enter를 누르세요'
             />
             <Button
@@ -79,7 +78,7 @@ export default function AddItem({
               onClick={() => {
                 if (tagInput.trim() !== "") {
                   setTags((prev) => [...prev, tagInput.trim()]);
-                  setTagInput(""); // 입력창 비우기
+                  setTagInput("");
                 }
               }}
               className='ms-2'

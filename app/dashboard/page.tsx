@@ -20,6 +20,13 @@ export default function DashBoard() {
   return (
     <Container>
       <BoardHeader onAddClick={handleAddItem} />
+      <AddItem
+        show={!!selectedItem}
+        item={selectedItem}
+        onSave={handleSaveItem}
+        onClose={handleCloseDetail}
+        onDelete={handleDeleteItem}
+      />
 
       <div id='dashBoard'>
         <Card>
@@ -36,14 +43,6 @@ export default function DashBoard() {
             ))}
           </div>
         </Card>
-
-        <AddItem
-          show={!!selectedItem}
-          item={selectedItem}
-          onSave={handleSaveItem}
-          onClose={handleCloseDetail}
-          onDelete={handleDeleteItem}
-        />
 
         <Card>
           <Card.Header>진행중</Card.Header>
