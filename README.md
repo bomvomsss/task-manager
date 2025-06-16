@@ -32,24 +32,16 @@ JSON 으로 테스트 데이터 적용
 
 ## 폴더 구조
 
-### 달력
+### Calendar
 
 [react로 달력 구현하기](https://velog.io/@rachel28/React-%EC%BA%98%EB%A6%B0%EB%8D%94%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EC%9E%90-feat.-date-fns)
 `calendar` 경로에 일정용 달력을 넣고, CalendarBody와 CalendarHeader 컴포넌트로 나누어서 page.tsx에 넣기.
 
 ### Navigation
 
-`Navigation.tsx` 파일을 생성해서 `layout.tsx`에 import 하는데 계속
-
-```
-Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
-```
-
-라고 에러가 뜸
-뭘 어떻게 고쳐도 안되다가
-`Navigation.tsx` 컴포넌트 최상단에 `"use client"` 입력해주니 해-결
-
 ### Dash Board
+
+### Components
 
 ```
 // 👇 이건 named export
@@ -67,6 +59,7 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
   const [contents, setContents] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+}
 ```
 
 옳은 import 방법!
