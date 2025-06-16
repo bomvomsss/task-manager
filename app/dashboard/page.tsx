@@ -1,11 +1,11 @@
 "use client";
 import { useRef, useEffect } from "react";
 import "../styles/dashboard.css";
-import { Container, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import BoardHeader from "./components/BoardHeader";
-import TodoItem from "../components/TodoItem";
 import AddItem from "../components/AddItem";
 import useCtrlItems, { TodoItemType, TodoStatus } from "../hooks/useCtrlItems";
+import BoardBody from "./components/BoardBody";
 
 export default function DashBoard() {
   const {
@@ -49,66 +49,12 @@ export default function DashBoard() {
         onDelete={handleDeleteItem}
       />
 
-      <div id='dashBoard'>
-        <Card
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, "todo")}
-        >
-          <Card.Header>할 일</Card.Header>
-          <div className='card-body'>
-            {items
-              .filter((item) => item.status === "todo")
-              .map((item) => (
-                <TodoItem
-                  key={item.id}
-                  {...item}
-                  onClick={() => handleOpenDetail(item)}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, item)}
-                />
-              ))}
-          </div>
-        </Card>
-
-        <Card
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, "doing")}
-        >
-          <Card.Header>진행중</Card.Header>
-          <div className='card-body'>
-            {items
-              .filter((item) => item.status === "doing")
-              .map((item) => (
-                <TodoItem
-                  key={item.id}
-                  {...item}
-                  onClick={() => handleOpenDetail(item)}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, item)}
-                />
-              ))}
-          </div>
-        </Card>
-        <Card
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, "done")}
-        >
-          <Card.Header>완료</Card.Header>
-          <div className='card-body'>
-            {items
-              .filter((item) => item.status === "done")
-              .map((item) => (
-                <TodoItem
-                  key={item.id}
-                  {...item}
-                  onClick={() => handleOpenDetail(item)}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, item)}
-                />
-              ))}
-          </div>
-        </Card>
-      </div>
+      <BoardBody
+        items={items}
+        handleOpenDetail={handleOpenDetail}
+        handleDragStart={handleDragStart}
+        handleDrop={handleDrop}
+      />
     </Container>
   );
 }

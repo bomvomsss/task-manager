@@ -1,24 +1,9 @@
+import useCalendarContext from "../hooks/useCalendarContext";
 import { Container, Button } from "react-bootstrap";
 import { BsChevronRight, BsChevronLeft, BsPlusLg } from "react-icons/bs";
 
-interface CalendarHeaderProps {
-  dispatch: {
-    handlePrevYear: () => void;
-    handleNextYear: () => void;
-    handlePrevMonth: () => void;
-    handleNextMonth: () => void;
-  };
-  currentDate: {
-    year: string;
-    month: string;
-    day: string;
-  };
-}
-
-export default function CalendarHeader({
-  dispatch,
-  currentDate,
-}: CalendarHeaderProps) {
+export default function CalendarHeader() {
+  const { dispatch, currentDate } = useCalendarContext();
   return (
     <Container>
       <div className='calBtnGroup'>

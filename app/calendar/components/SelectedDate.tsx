@@ -1,12 +1,8 @@
-interface SelectedDateType {
-  date: string | null;
-  selectDate: (date: string) => void;
-}
+import useCalendarContext from "../hooks/useCalendarContext";
 
-export default function SelectedDate({
-  selectedDate,
-}: {
-  selectedDate: SelectedDateType;
-}) {
+const SelectedDate = () => {
+  const { selectedDate } = useCalendarContext();
   return <div>{selectedDate.date}</div>;
-}
+};
+
+export default SelectedDate;

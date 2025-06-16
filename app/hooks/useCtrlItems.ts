@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 // 할일 아이템 컨트롤 컴포넌트

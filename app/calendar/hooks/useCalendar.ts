@@ -21,7 +21,7 @@ const useCalendar = () => {
     "yyyy-MM-dd"
   ).split("-");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
+  const [scheduled, setScheduled] = useState<string | null>(null);
   const startCurrentMonth = startOfMonth(currentDate);
   const endCurrentMonth = endOfMonth(currentDate);
   const startOfFirstWeek = startOfWeek(startCurrentMonth, { weekStartsOn: 0 });
@@ -49,6 +49,11 @@ const useCalendar = () => {
   const handleSelectDate = (date: string) => {
     setSelectedDate((prev) => (prev === date ? "" : date));
   };
+
+  const handleSchedule = (date: string) => {
+    setScheduled((prev) => (prev === date ? "" : date));
+  };
+
   const daysInMonth = days.map((day) => ({
     date: format(day, "yyyy-MM-dd"),
     year: format(day, "yyyy"),
@@ -73,6 +78,10 @@ const useCalendar = () => {
     selectedDate: {
       date: selectedDate,
       selectDate: handleSelectDate,
+    },
+    scheduledDate: {
+      date: scheduled,
+      scheduled: handleSchedule,
     },
   };
 };
