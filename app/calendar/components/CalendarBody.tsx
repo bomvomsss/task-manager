@@ -1,10 +1,33 @@
 "use client";
-import useCalendarContext from "../hooks/useCalendarContext";
 import { Container } from "react-bootstrap";
 
-export default function CalendarBody() {
+interface DateInfo {
+  year: string;
+  month: string;
+  day: string;
+  date: string;
+  dayIndexOfWeek: number;
+}
+interface SelectedDateType {
+  date: string | null;
+  selectDate: (date: string) => void;
+}
+interface CalendarBodyProps {
+  daysInMonth: DateInfo[];
+  selectedDate: SelectedDateType;
+  currentDate: {
+    year: string;
+    month: string;
+    day: string;
+  };
+}
+
+export default function CalendarBody({
+  daysInMonth,
+  selectedDate,
+  currentDate,
+}: CalendarBodyProps) {
   const weeks = ["일", "월", "화", "수", "목", "금", "토"];
-  const { daysInMonth, selectedDate, currentDate } = useCalendarContext();
 
   return (
     <Container>

@@ -1,6 +1,8 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { BsXCircleFill } from "react-icons/bs";
-import useAddItems, { AddItemProps } from "../../hooks/useAddItems";
+import useAddItems, { AddItemProps } from "../hooks/useAddItems";
+import { TodoStatus } from "../hooks/useCtrlItems";
+import DateRangeInput from "./DateValidation";
 
 export default function AddItem({
   item,
@@ -23,6 +25,12 @@ export default function AddItem({
     handleAddTag,
     handleRemoveTag,
     handleKeyDown,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    status,
+    setStatus,
   } = useAddItems({ item, onSave, onDelete, show, onClose });
 
   return (
@@ -42,6 +50,25 @@ export default function AddItem({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Form.Group className='mb-3 flexBox' controlId='dateCtrl'>
+          <DateRangeInput
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+          />
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='statusCtrl'>
+          <Form.Label className='mb-2'>상태</Form.Label>
+          <Form.Select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as TodoStatus)}
+          >
+            <option value='todo'>할 일</option>
+            <option value='doing'>진행중</option>
+            <option value='done'>완료</option>
+          </Form.Select>
+        </Form.Group>
         <Form.Group className='mb-3' controlId='LabelCtrl'>
           <Form.Label className='mb-2'>라벨</Form.Label>
           <Form.Select>

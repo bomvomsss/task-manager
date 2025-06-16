@@ -1,9 +1,15 @@
 import { useState } from "react";
 
+// 할일 아이템 컨트롤 컴포넌트
+
+export type TodoStatus = "todo" | "doing" | "done";
+
 export interface TodoItemType {
-  id: number;
-  text: string;
-  tags: string[];
+  id: number; // 고유 번호
+  text: string; // 내용
+  tags: string[]; // 태그
+  dates: string[]; // 날짜
+  status: TodoStatus; // 상태
 }
 
 export default function useCtrlItems() {
@@ -15,6 +21,8 @@ export default function useCtrlItems() {
       id: Date.now(),
       text: "",
       tags: [],
+      dates: [],
+      status: "todo", // 기본값
     };
     setSelectedItem(newItem);
   };
@@ -46,6 +54,7 @@ export default function useCtrlItems() {
 
   return {
     items,
+    setItems,
     selectedItem,
     handleAddItem,
     handleOpenDetail,

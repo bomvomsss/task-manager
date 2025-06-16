@@ -62,6 +62,9 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
 }
 ```
 
+> 컴포넌트 import와 타입 import는 별개입니다.
+> 타입은 반드시 명시적으로 import해야 합니다.
+
 옳은 import 방법!
 `import useAddItems, { AddItemProps } from "../hooks/useAddItems";`
 

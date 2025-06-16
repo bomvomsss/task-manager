@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { TodoItemType } from "./useCtrlItems";
+import { TodoItemType, TodoStatus } from "./useCtrlItems";
 
+// 할 일 추가 컴포넌트
 export interface AddItemProps {
   show: boolean;
   item: TodoItemType | null;
@@ -14,18 +15,34 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
   const [contents, setContents] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [status, setStatus] = useState<TodoStatus>("todo");
 
   useEffect(() => {
     if (item) {
       setText(item.text);
       setContents("");
-      setTags([]);
+      setTags(item.tags ?? []);
+      setStartDate(item.dates?.[0] ?? "");
+      setEndDate(item.dates?.[1] ?? "");
+      setStatus(item.status ?? "todo");
     }
   }, [item]);
 
   const handleSave = () => {
+    if (startDate && endDate && startDate > endDate) {
+      alert("시작 날짜는 종료 날짜보다 이후일 수 없습니다.");
+      return;
+    }
     if (item && text.trim() !== "") {
-      onSave({ ...item, text });
+      onSave({
+        ...item,
+        text,
+        tags,
+        dates: startDate && endDate ? [startDate, endDate] : [],
+        status,
+      });
     }
   };
   const handleDelete = () => {
@@ -67,5 +84,11 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
     handleAddTag,
     handleRemoveTag,
     handleKeyDown,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    status,
+    setStatus,
   };
 }
