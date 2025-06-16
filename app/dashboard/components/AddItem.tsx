@@ -1,6 +1,6 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { BsXCircleFill } from "react-icons/bs";
-import useAddItems, { AddItemProps } from "../hooks/useAddItems";
+import useAddItems, { AddItemProps } from "../../hooks/useAddItems";
 
 export default function AddItem({
   item,

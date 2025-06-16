@@ -4,7 +4,7 @@ import { Container, Card } from "react-bootstrap";
 import BoardHeader from "./components/BoardHeader";
 import TodoItem from "./components/TodoItem";
 import AddItem from "./components/AddItem";
-import useCtrlItems from "./hooks/useCtrlItems";
+import useCtrlItems from "../hooks/useCtrlItems";
 
 export default function DashBoard() {
   const {

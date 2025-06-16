@@ -1,4 +1,4 @@
-import { TodoItemType } from "../hooks/useCtrlItems";
+import { TodoItemType } from "../../hooks/useCtrlItems";
 
 interface TodoItemProps extends TodoItemType {
   onClick: () => void;
