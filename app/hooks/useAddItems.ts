@@ -82,7 +82,6 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
     setTags,
     handleSave,
     handleDelete,
-    handleAddTag,
     handleRemoveTag,
     handleKeyDown,
     startDate,

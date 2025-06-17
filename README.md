@@ -32,14 +32,36 @@ JSON 으로 테스트 데이터 적용
 
 ## 폴더 구조
 
-### Calendar
-
-[react로 달력 구현하기](https://velog.io/@rachel28/React-%EC%BA%98%EB%A6%B0%EB%8D%94%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EC%9E%90-feat.-date-fns)
-`calendar` 경로에 일정용 달력을 넣고, CalendarBody와 CalendarHeader 컴포넌트로 나누어서 page.tsx에 넣기.
+Context 구조로 관리. Next도 Context 구조도 처음이라 많이 버벅댄다.
 
 ### Navigation
 
+일단은 Main, Calendar, Dash Board로 구성하긴 했는데 Main 화면을 어떻게 구성할 지는 계획 무.
+
+### Calendar
+
+[react로 달력 구현하기](https://velog.io/@rachel28/React-%EC%BA%98%EB%A6%B0%EB%8D%94%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%B4%EB%B3%B4%EC%9E%90-feat.-date-fns)
+
+```
+├─calendar
+│  │  page.tsx
+│  │
+│  ├─components
+│  │      CalendarBody.tsx
+│  │      CalendarHeader.tsx
+│  │      ScheduleItem.tsx
+│  │      SelectedDate.tsx
+│  │
+│  └─hooks
+│          useCalendar.ts
+│          useCalendarContext.ts
+```
+
+훅이랑 컴포넌트를 따로 분리해서 사용. ScheduleItem은 전체 컴포넌트에서 `useAdditem.ts`와 `useCtrlItems.ts`가 관리하는 컴포넌트.
+
 ### Dash Board
+
+일정을 추가하고 드래그해서 할일 -> 진행중 -> 완료 옮길 수 있음. 동시에 상태 변화.
 
 ### Components
 

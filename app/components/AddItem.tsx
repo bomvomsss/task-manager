@@ -22,7 +22,6 @@ export default function AddItem({
     setTags,
     handleSave,
     handleDelete,
-    handleAddTag,
     handleRemoveTag,
     handleKeyDown,
     startDate,

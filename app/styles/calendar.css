@@ -12,7 +12,6 @@
   font-size: 35px;
   margin: 0 15px;
 }
-
 .weekWrapper {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -34,7 +33,6 @@
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   align-self: stretch;
-  cursor: pointer;
 }
 .sunday {
   color: #ff5050;
@@ -65,4 +63,37 @@
   margin-left: auto;
   height: fit-content;
   padding: 1px 5px;
+}
+.schedule-item {
+  padding: 2px 6px;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  color: white;
+  word-break: break-word;
+  cursor: pointer;
+  position: "relative";
+}
+
+.schedule-todo {
+  background-color: #007bff;
+}
+
+.schedule-doing {
+  background-color: #ffc107;
+  color: black;
+}
+
+.schedule-done {
+  background-color: #28a745;
+}
+.selected-date-details {
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+.multiDayWrapper {
+  position: relative;
+  z-index: 1;
 }

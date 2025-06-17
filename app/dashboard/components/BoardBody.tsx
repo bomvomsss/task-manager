@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import TodoItem from "../../components/TodoItem";
+import TodoItem from "./TodoItem";
 import { TodoItemType, TodoStatus } from "../../hooks/useCtrlItems";
 
 interface BoardBodyProps {
