@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./components/Navigation";
 import { TodoProvider } from "./context/TodoContext";
-
-const roboto = Roboto({
-  weight: "400",
-  subsets: [],
-});
 
 export const metadata: Metadata = {
   title: "Task Manager",
@@ -25,7 +19,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className={`${roboto.className}`}>
+      <head>
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin='anonymous'
+        />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'
+          rel='stylesheet'
+        />
+      </head>
+      <body>
         <TodoProvider>
           <div id='mainWrap'>
             <Navigation />
