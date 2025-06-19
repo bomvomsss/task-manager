@@ -1,73 +1,138 @@
-"use client";
 import {
-  addMonths,
-  addYears,
-  eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
-  format,
-  getDay,
   startOfMonth,
+  endOfMonth,
   startOfWeek,
-  subMonths,
-  subYears,
+  endOfWeek,
+  addDays,
+  format,
 } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
+import type { CalendarContextType } from "./useCalendarContext";
 
-const useCalendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentYear, currentMonth, currentDay] = format(
-    currentDate,
-    "yyyy-MM-dd"
-  ).split("-");
+export default function useCalendar(): CalendarContextType {
+  // 캘린더 날짜, 선택된 날짜, 현재 날짜 등
+  const [daysInMonth, setDaysInMonth] = useState<any[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [scheduled, setScheduled] = useState<string | null>(null);
-  const startCurrentMonth = startOfMonth(currentDate);
-  const endCurrentMonth = endOfMonth(currentDate);
-  const startOfFirstWeek = startOfWeek(startCurrentMonth, { weekStartsOn: 0 });
-  const endOfLastWeek = endOfWeek(endCurrentMonth, { weekStartsOn: 0 });
-
-  const days = eachDayOfInterval({
-    start: startOfFirstWeek,
-    end: endOfLastWeek,
+  const [scheduledDate, setScheduledDate] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<{
+    year: string;
+    month: string;
+    day: string;
+  }>(() => {
+    const now = new Date();
+    return {
+      year: String(now.getFullYear()),
+      month: String(now.getMonth() + 1).padStart(2, "0"),
+      day: String(now.getDate()).padStart(2, "0"),
+    };
   });
-  const handlePrevYear = () => {
-    setCurrentDate((prevDate) => subYears(prevDate, 1));
+  function generateDaysInMonth(year: string, month: string) {
+    const firstDay = startOfMonth(new Date(Number(year), Number(month) - 1));
+    const lastDay = endOfMonth(firstDay);
+    const calendarStart = startOfWeek(firstDay, { weekStartsOn: 0 });
+    const calendarEnd = endOfWeek(lastDay, { weekStartsOn: 0 });
+
+    const days: any[] = [];
+    let day = calendarStart;
+    while (day <= calendarEnd) {
+      days.push({
+        year: String(day.getFullYear()),
+        month: String(day.getMonth() + 1).padStart(2, "0"),
+        day: String(day.getDate()).padStart(2, "0"),
+        date: format(day, "yyyy-MM-dd"),
+        dayIndexOfWeek: day.getDay(),
+      });
+      day = addDays(day, 1);
+    }
+    return days;
+  }
+  useEffect(() => {
+    if (currentDate?.year && currentDate?.month) {
+      const days = generateDaysInMonth(currentDate.year, currentDate.month);
+      setDaysInMonth(days);
+    }
+  }, [currentDate.year, currentDate.month]);
+  // 할 일 관련 상태
+  const [items, setItems] = useState<TodoItemType[]>([]);
+  const [selectedItem, setSelectedItem] = useState<TodoItemType | null>(null);
+
+  // ✅ test-todos.json에서 일정 불러오기 (대시보드와 동일)
+  useEffect(() => {
+    fetch("/test-todos.json")
+      .then((res) => res.json())
+      .then((data) => {
+        // dates가 1개만 있으면 [start, end]로 보정
+        const normalized = data.map((item: any) => ({
+          ...item,
+          dates:
+            item.dates.length === 1
+              ? [item.dates[0], item.dates[0]]
+              : item.dates,
+        }));
+        setItems(normalized);
+      })
+      .catch(console.error);
+  }, []);
+
+  // 할 일 상세/저장/삭제 등 메서드
+  const handleOpenDetail = (item: TodoItemType) => setSelectedItem(item);
+  const handleCloseDetail = () => setSelectedItem(null);
+  const handleSaveItem = (item: TodoItemType) => {
+    setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
+    setSelectedItem(null);
+  };
+  const handleDeleteItem = (item: TodoItemType) => {
+    setItems((prev) => prev.filter((i) => i.id !== item.id));
+    setSelectedItem(null);
   };
 
+  // 캘린더 이동 메서드 예시
+  const handlePrevYear = () => {
+    setCurrentDate((prev) => ({
+      ...prev,
+      year: String(Number(prev.year) - 1),
+    }));
+  };
   const handleNextYear = () => {
-    setCurrentDate((prevDate) => addYears(prevDate, 1));
+    setCurrentDate((prev) => ({
+      ...prev,
+      year: String(Number(prev.year) + 1),
+    }));
   };
   const handlePrevMonth = () => {
-    setCurrentDate((prevDate) => subMonths(prevDate, 1));
+    setCurrentDate((prev) => {
+      let month = Number(prev.month) - 1;
+      let year = Number(prev.year);
+      if (month < 1) {
+        month = 12;
+        year -= 1;
+      }
+      return {
+        ...prev,
+        year: String(year),
+        month: String(month).padStart(2, "0"),
+      };
+    });
   };
-
   const handleNextMonth = () => {
-    setCurrentDate((prevDate) => addMonths(prevDate, 1));
+    setCurrentDate((prev) => {
+      let month = Number(prev.month) + 1;
+      let year = Number(prev.year);
+      if (month > 12) {
+        month = 1;
+        year += 1;
+      }
+      return {
+        ...prev,
+        year: String(year),
+        month: String(month).padStart(2, "0"),
+      };
+    });
   };
-
-  const handleSelectDate = (date: string) => {
-    setSelectedDate((prev) => (prev === date ? "" : date));
-  };
-
-  const handleSchedule = (date: string) => {
-    setScheduled((prev) => (prev === date ? "" : date));
-  };
-
-  const daysInMonth = days.map((day) => ({
-    date: format(day, "yyyy-MM-dd"),
-    year: format(day, "yyyy"),
-    month: format(day, "MM"),
-    day: format(day, "dd"),
-    dayIndexOfWeek: getDay(day),
-  }));
 
   return {
-    currentDate: {
-      year: currentYear,
-      month: currentMonth,
-      day: currentDay,
-    },
+    currentDate,
     daysInMonth,
     dispatch: {
       handlePrevYear,
@@ -77,12 +142,19 @@ const useCalendar = () => {
     },
     selectedDate: {
       date: selectedDate,
-      selectDate: handleSelectDate,
+      selectDate: setSelectedDate,
     },
     scheduledDate: {
-      date: scheduled,
-      scheduled: handleSchedule,
+      date: scheduledDate,
+      scheduled: setScheduledDate,
     },
+    items,
+    setItems,
+    selectedItem,
+    setSelectedItem,
+    handleOpenDetail,
+    handleCloseDetail,
+    handleSaveItem,
+    handleDeleteItem,
   };
-};
-export default useCalendar;
+}

@@ -1,11 +1,12 @@
 import { createContext, useContext } from "react";
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
 
 interface DateInfo {
   year: string;
   month: string;
   day: string;
 }
-interface CalendarContextType {
+export interface CalendarContextType {
   currentDate: DateInfo;
   daysInMonth: (DateInfo & { date: string; dayIndexOfWeek: number })[];
   dispatch: {
@@ -22,6 +23,15 @@ interface CalendarContextType {
     date: string | null;
     scheduled: (date: string) => void;
   };
+  // 할일 관련 필드 및 메서드
+  items: TodoItemType[];
+  setItems: React.Dispatch<React.SetStateAction<TodoItemType[]>>;
+  selectedItem: TodoItemType | null;
+  setSelectedItem: React.Dispatch<React.SetStateAction<TodoItemType | null>>;
+  handleOpenDetail: (item: TodoItemType) => void;
+  handleCloseDetail: () => void;
+  handleSaveItem: (item: TodoItemType) => void;
+  handleDeleteItem: (item: TodoItemType) => void;
 }
 
 export const CalendarContext = createContext<CalendarContextType | null>(null);

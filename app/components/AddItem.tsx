@@ -3,14 +3,9 @@ import { BsXCircleFill } from "react-icons/bs";
 import useAddItems, { AddItemProps } from "../hooks/useAddItems";
 import { TodoStatus } from "../hooks/useCtrlItems";
 import DateRangeInput from "./DateValidation";
+import { useTodos } from "../context/TodoContext";
 
-export default function AddItem({
-  item,
-  onSave,
-  onDelete,
-  show,
-  onClose,
-}: AddItemProps) {
+export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
   const {
     text,
     setText,
@@ -21,7 +16,6 @@ export default function AddItem({
     tags,
     setTags,
     handleSave,
-    handleDelete,
     handleRemoveTag,
     handleKeyDown,
     startDate,
@@ -30,8 +24,9 @@ export default function AddItem({
     setEndDate,
     status,
     setStatus,
-  } = useAddItems({ item, onSave, onDelete, show, onClose });
-
+    toStatusId,
+  } = useAddItems({ item, onSave, show, onClose });
+  const { requestDelete } = useTodos();
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
@@ -66,17 +61,6 @@ export default function AddItem({
             <option value='todo'>할 일</option>
             <option value='doing'>진행중</option>
             <option value='done'>완료</option>
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className='mb-3' controlId='LabelCtrl'>
-          <Form.Label className='mb-2'>라벨</Form.Label>
-          <Form.Select>
-            <option value='none'>라벨을 선택해 주세요</option>
-            <option value='1'>First</option>
-            <option value='2'>Second</option>
-            <option value='3'>Third</option>
-            <option value='4'>Forth</option>
-            <option value='5'>Fifth</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className='mb-3' controlId='contentEditCtrl'>
@@ -133,7 +117,12 @@ export default function AddItem({
         <Button variant='primary' onClick={handleSave}>
           저장
         </Button>
-        <Button variant='danger' onClick={handleDelete}>
+        <Button
+          variant='danger'
+          onClick={() =>
+            item && requestDelete(toStatusId(item.status), String(item.id))
+          }
+        >
           삭제
         </Button>
       </Modal.Footer>

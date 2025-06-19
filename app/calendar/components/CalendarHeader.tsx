@@ -3,7 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { BsChevronRight, BsChevronLeft, BsPlusLg } from "react-icons/bs";
 
 export default function CalendarHeader() {
-  const { dispatch, currentDate } = useCalendarContext();
+  const { currentDate, dispatch } = useCalendarContext();
   return (
     <Container>
       <div className='calBtnGroup'>

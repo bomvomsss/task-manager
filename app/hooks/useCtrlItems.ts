@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // 할일 아이템 컨트롤 컴포넌트
 
@@ -7,9 +7,10 @@ export type TodoStatus = "todo" | "doing" | "done";
 
 export interface TodoItemType {
   id: number; // 고유 번호
-  text: string; // 내용
+  text: string; // 제목
   tags: string[]; // 태그
   dates: string[]; // 시작, 종료 날짜
+  contents: string; // 내용
   status: TodoStatus; // 상태
 }
 
@@ -40,6 +41,7 @@ export default function useCtrlItems() {
       id: Date.now(),
       text: "",
       tags: [],
+      contents: "",
       dates: [
         new Date().toISOString().split("T")[0],
         new Date().toISOString().split("T")[0],
@@ -69,11 +71,6 @@ export default function useCtrlItems() {
     handleCloseDetail();
   };
 
-  const handleDeleteItem = (item: TodoItemType) => {
-    setItems((prev) => prev.filter((i) => i.id !== item.id));
-    handleCloseDetail();
-  };
-
   // ✅ updateItem 함수: 드래그 등으로 날짜 변경 시 사용
   const updateItem = (id: number, newDates: [string, string]) => {
     setItems((prev) =>
@@ -89,7 +86,6 @@ export default function useCtrlItems() {
     handleOpenDetail,
     handleCloseDetail,
     handleSaveItem,
-    handleDeleteItem,
     updateItem,
   };
 }

@@ -1,44 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import { Container } from "react-bootstrap";
 import ScheduleItem from "./ScheduleItem";
-import { TodoItemType } from "@/app/hooks/useCtrlItems";
+import { useTodos } from "@/app/context/TodoContext";
 import AddItem from "@/app/components/AddItem";
 import { differenceInCalendarDays } from "date-fns";
-export interface CalendarBodyProps {
-  daysInMonth: any[];
-  selectedDate: any;
-  currentDate: any;
-  items: TodoItemType[];
-  selectedItem: TodoItemType | null;
-  handleOpenDetail: (item: TodoItemType) => void;
-  handleCloseDetail: () => void;
-  handleSaveItem: (item: TodoItemType) => void;
-  handleDeleteItem: (item: TodoItemType) => void;
-}
+import { toStatusId } from "@/app/hooks/useAddItems";
+import useCalendarContext from "../hooks/useCalendarContext";
 
-export default function CalendarBody({
-  daysInMonth,
-  selectedDate,
-  currentDate,
-  selectedItem,
-  items,
-  handleOpenDetail,
-  handleCloseDetail,
-  handleSaveItem,
-  handleDeleteItem,
-}: CalendarBodyProps) {
-  const [todos, setTodos] = useState<TodoItemType[]>([]);
-
-  useEffect(() => {
-    fetch("/test-todos.json")
-      .then((res) => res.json())
-      .then((data) => setTodos(data))
-      .catch((err) => console.error("Failed to load todos", err));
-  }, []);
+export default function CalendarBody() {
+  const {
+    daysInMonth,
+    selectedDate,
+    currentDate,
+    items,
+    selectedItem,
+    handleOpenDetail,
+    handleCloseDetail,
+    handleSaveItem,
+  } = useCalendarContext();
 
   const weeks = ["일", "월", "화", "수", "목", "금", "토"];
-
+  const { requestDelete } = useTodos();
   return (
     <>
       <Container>
@@ -54,15 +37,18 @@ export default function CalendarBody({
             </div>
           ))}
         </div>
-        <div className='dayWrapper'>
-          {daysInMonth.map((date) => {
+        <div
+          className='dayWrapper'
+          style={{ display: "flex", flexWrap: "wrap" }}
+        >
+          {daysInMonth.map((date, idx) => {
             const yyyyMMdd = `${date.year}-${String(date.month).padStart(
               2,
               "0"
             )}-${String(date.day).padStart(2, "0")}`;
 
             // 해당 날짜에 시작하는 todo만 필터링
-            const startingTodos = todos.filter(
+            const startingTodos = items.filter(
               (todo) => todo.dates && todo.dates[0] === yyyyMMdd
             );
             const isCurrentMonth = currentDate.month === date.month;
@@ -87,6 +73,7 @@ export default function CalendarBody({
                 onClick={() => selectedDate.selectDate(date.date)}
                 className={classNames}
                 key={`dayItem-${date.year}-${date.month}-${date.day}`}
+                style={{ width: "14.28%" }}
               >
                 <span>{date.day}</span>
                 {startingTodos.map((todo) => {
@@ -132,11 +119,18 @@ export default function CalendarBody({
         </div>
       </Container>
 
-      {/* 📌 AddItem 모달 */}
       <AddItem
         item={selectedItem}
         onSave={handleSaveItem}
-        onDelete={handleDeleteItem}
+        onDelete={
+          selectedItem
+            ? () =>
+                requestDelete(
+                  toStatusId(selectedItem.status),
+                  String(selectedItem.id)
+                )
+            : undefined
+        }
         show={!!selectedItem}
         onClose={handleCloseDetail}
       />

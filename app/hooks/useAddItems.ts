@@ -8,10 +8,14 @@ export interface AddItemProps {
   item: TodoItemType | null;
   onSave: (item: TodoItemType) => void;
   onClose: () => void;
-  onDelete: (item: TodoItemType) => void;
+  onDelete?: () => void;
+}
+export function toStatusId(status: TodoStatus): "todo" | "inprogress" | "done" {
+  if (status === "doing") return "inprogress";
+  return status;
 }
 
-export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
+export default function useAddItems({ item, onSave }: AddItemProps) {
   const [text, setText] = useState("");
   const [contents, setContents] = useState("");
   const [tagInput, setTagInput] = useState("");
@@ -41,14 +45,10 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
         ...item,
         text,
         tags,
+        contents,
         dates: startDate && endDate ? [startDate, endDate] : [],
         status,
       });
-    }
-  };
-  const handleDelete = () => {
-    if (item) {
-      onDelete(item);
     }
   };
 
@@ -81,7 +81,6 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
     tags,
     setTags,
     handleSave,
-    handleDelete,
     handleRemoveTag,
     handleKeyDown,
     startDate,
@@ -90,5 +89,6 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
     setEndDate,
     status,
     setStatus,
+    toStatusId,
   };
 }

@@ -16,9 +16,7 @@ export default function DashBoard() {
     handleOpenDetail,
     handleCloseDetail,
     handleSaveItem,
-    handleDeleteItem,
   } = useCtrlItems();
-
   useEffect(() => {
     fetch("/test-todos.json")
       .then((res) => res.json())
@@ -46,7 +44,6 @@ export default function DashBoard() {
         item={selectedItem}
         onSave={handleSaveItem}
         onClose={handleCloseDetail}
-        onDelete={handleDeleteItem}
       />
 
       <BoardBody
