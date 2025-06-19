@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export interface ScheduleItemProps {
   itemId: number;
   text: string;

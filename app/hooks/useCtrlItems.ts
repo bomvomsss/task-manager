@@ -24,7 +24,7 @@ export default function useCtrlItems() {
       .then((res) => res.json())
       .then((data) => {
         // 만약 dates가 배열 한 개만 있는 경우 [start, end]로 맞춰줌
-        const normalized = data.map((item: any) => ({
+        const normalized = data.map((item: TodoItemType) => ({
           ...item,
           dates:
             item.dates.length === 1
