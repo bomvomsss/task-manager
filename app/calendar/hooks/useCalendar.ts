@@ -12,7 +12,14 @@ import type { CalendarContextType } from "./useCalendarContext";
 
 export default function useCalendar(): CalendarContextType {
   // 캘린더 날짜, 선택된 날짜, 현재 날짜 등
-  const [daysInMonth, setDaysInMonth] = useState<any[]>([]);
+  type DayInMonth = {
+    year: string;
+    month: string;
+    day: string;
+    date: string;
+    dayIndexOfWeek: number;
+  };
+  const [daysInMonth, setDaysInMonth] = useState<DayInMonth[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [scheduledDate, setScheduledDate] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState<{
@@ -33,7 +40,7 @@ export default function useCalendar(): CalendarContextType {
     const calendarStart = startOfWeek(firstDay, { weekStartsOn: 0 });
     const calendarEnd = endOfWeek(lastDay, { weekStartsOn: 0 });
 
-    const days: any[] = [];
+    const days: DayInMonth[] = [];
     let day = calendarStart;
     while (day <= calendarEnd) {
       days.push({
@@ -63,7 +70,7 @@ export default function useCalendar(): CalendarContextType {
       .then((res) => res.json())
       .then((data) => {
         // dates가 1개만 있으면 [start, end]로 보정
-        const normalized = data.map((item: any) => ({
+        const normalized: TodoItemType[] = data.map((item: TodoItemType) => ({
           ...item,
           dates:
             item.dates.length === 1
