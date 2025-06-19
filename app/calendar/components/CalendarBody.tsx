@@ -58,7 +58,13 @@ export default function CalendarBody() {
             return 0;
           });
           // 3. 트랙(행) x 날짜(week.length) 2차원 배열 생성
-          const trackMatrix: (any | null)[][] = [];
+          type TrackTodo = (typeof weekTodos)[number] & {
+            blockStart: string;
+            blockEnd: string;
+            startIdx: number;
+            endIdx: number;
+          };
+          const trackMatrix: (TrackTodo | null)[][] = [];
           weekTodos.forEach((todo) => {
             const [start, end] = todo.dates;
             const blockStart = start < weekStart ? weekStart : start;

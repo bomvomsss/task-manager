@@ -18,17 +18,10 @@ const statusColors = {
 };
 
 export default function ScheduleItem({
-  itemId,
   text,
   status,
-  dates,
-  currentDate,
   onClick,
-  isStart,
-  isEnd,
 }: ScheduleItemProps) {
-  const [isResizing, setIsResizing] = useState(false);
-
   return (
     <div className={`schedule-item ${statusColors[status]}`} onClick={onClick}>
       {text}
@@ -36,7 +29,6 @@ export default function ScheduleItem({
         className='resize-handle'
         onMouseDown={(e) => {
           e.stopPropagation();
-          setIsResizing(true);
         }}
       />
     </div>
