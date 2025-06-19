@@ -41,9 +41,13 @@ export function TodoProvider({ children }: { children: ReactNode }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const addTodo = (statusId: StatusId, item: TodoItem) => {
+    const newItem = {
+      ...item,
+      id: item.id ?? String(Date.now()),
+    };
     setTodos((prev) => ({
       ...prev,
-      [statusId]: [...prev[statusId], item],
+      [statusId]: [...prev[statusId], newItem],
     }));
   };
 

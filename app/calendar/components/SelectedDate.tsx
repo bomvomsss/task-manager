@@ -25,7 +25,11 @@ export default function SelectedDate() {
 
   const yyyyMMdd = selectedDate.date;
 
-  const matchedTodos = todos.filter((todo) => todo.dates.includes(yyyyMMdd));
+  // 기간 내에 포함된 일정도 모두 표시
+  const matchedTodos = todos.filter((todo) => {
+    const [start, end] = todo.dates.length === 2 ? todo.dates : [todo.dates[0], todo.dates[0]];
+    return start <= yyyyMMdd && end >= yyyyMMdd;
+  });
 
   return (
     <div className='selected-date-details'>

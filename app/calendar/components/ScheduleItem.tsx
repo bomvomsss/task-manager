@@ -1,12 +1,14 @@
 import { useState } from "react";
 
-interface ScheduleItemProps {
+export interface ScheduleItemProps {
   itemId: number;
   text: string;
   status: "todo" | "doing" | "done";
   dates: [string, string];
   currentDate: string;
   onClick: () => void;
+  isStart?: boolean;
+  isEnd?: boolean;
 }
 
 const statusColors = {
@@ -16,9 +18,14 @@ const statusColors = {
 };
 
 export default function ScheduleItem({
+  itemId,
   text,
   status,
+  dates,
+  currentDate,
   onClick,
+  isStart,
+  isEnd,
 }: ScheduleItemProps) {
   const [isResizing, setIsResizing] = useState(false);
 
@@ -30,14 +37,6 @@ export default function ScheduleItem({
         onMouseDown={(e) => {
           e.stopPropagation();
           setIsResizing(true);
-        }}
-        style={{
-          position: "absolute",
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: "6px",
-          cursor: "ew-resize",
         }}
       />
     </div>

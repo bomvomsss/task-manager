@@ -21,7 +21,7 @@ export default function BoardBody({
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "todo")}
       >
-        <Card.Header>할 일</Card.Header>
+        <Card.Header className='toDo'>할 일</Card.Header>
         <div className='card-body'>
           {items
             .filter((item) => item.status === "todo")
@@ -41,7 +41,7 @@ export default function BoardBody({
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "doing")}
       >
-        <Card.Header>진행중</Card.Header>
+        <Card.Header className='doing'>진행중</Card.Header>
         <div className='card-body'>
           {items
             .filter((item) => item.status === "doing")
@@ -60,7 +60,7 @@ export default function BoardBody({
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "done")}
       >
-        <Card.Header>완료</Card.Header>
+        <Card.Header className='done'>완료</Card.Header>
         <div className='card-body'>
           {items
             .filter((item) => item.status === "done")

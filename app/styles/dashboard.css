@@ -13,7 +13,41 @@
 }
 .card {
   flex: 1;
+  border: none;
 }
 .card-body {
   height: 100%;
+}
+.card-header {
+  line-height: 50px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+.card-header.toDo {
+  background: #a4cbf4;
+}
+.card-header.doing {
+  background: #5e4387;
+}
+.card-header.done {
+  background: #77ac83;
+}
+.toDo + .card-body {
+  background: #a4cbf43e;
+}
+.doing + .card-body {
+  background: #5e43873e;
+}
+.done + .card-body {
+  background: #77ac833e;
+}
+.todo-item {
+  cursor: pointer;
+  padding: 20px 30px;
+  margin: 10px 0;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px solid #d2bdf1;
 }
