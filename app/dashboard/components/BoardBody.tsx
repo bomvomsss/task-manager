@@ -29,7 +29,7 @@ export default function BoardBody({
               <TodoItem
                 key={item.id}
                 {...item}
-                onClick={() => handleOpenDetail(item)}
+                onDoubleClick={() => handleOpenDetail(item)}
                 draggable
                 onDragStart={(e) => handleDragStart(e, item)}
               />
@@ -49,7 +49,7 @@ export default function BoardBody({
               <TodoItem
                 key={item.id}
                 {...item}
-                onClick={() => handleOpenDetail(item)}
+                onDoubleClick={() => handleOpenDetail(item)}
                 draggable
                 onDragStart={(e) => handleDragStart(e, item)}
               />
@@ -68,7 +68,7 @@ export default function BoardBody({
               <TodoItem
                 key={item.id}
                 {...item}
-                onClick={() => handleOpenDetail(item)}
+                onDoubleClick={() => handleOpenDetail(item)}
                 draggable
                 onDragStart={(e) => handleDragStart(e, item)}
               />

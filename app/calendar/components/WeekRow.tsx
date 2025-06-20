@@ -5,7 +5,6 @@ import { CalendarItem, CalendarDate } from "../hooks/useCalendarContext";
 interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
-  weekIdx: number;
   handleOpenDetail: (item: CalendarItem) => void;
   selectedDate: any;
   currentDate: any;
@@ -14,7 +13,6 @@ interface WeekRowProps {
 export default function WeekRow({
   week,
   weekTodos,
-  weekIdx,
   handleOpenDetail,
   selectedDate,
   currentDate,
@@ -25,7 +23,10 @@ export default function WeekRow({
       {week.map((date, dayIdx) => {
         const isCurrentMonth = currentDate.month === date.month;
         const isSelectedDate = selectedDate?.date === date.date;
-        const isCurrentDay = currentDate.day === date.day;
+        const isCurrentDay =
+          currentDate.year === date.year &&
+          currentDate.month === date.month &&
+          currentDate.day === date.day;
         const isSunday = date.dayIndexOfWeek === 0;
         const isSaturday = date.dayIndexOfWeek === 6;
         const classNames = [
@@ -61,15 +62,16 @@ export default function WeekRow({
                   }}
                 >
                   <ScheduleItem
-                    itemId={todo.id}
-                    text={todo.text}
+                    id={todo.id}
+                    title={todo.title}
                     status={todo.status}
-                    dates={[todo.dates[0], todo.dates[1] ?? todo.dates[0]]}
-                    currentDate={date.date}
+                    start_date={todo.start_date}
+                    end_date={todo.end_date}
+                    contents={todo.contents}
+                    // currentDate={String(date.date)}
                     onDoubleClick={() => {
                       handleOpenDetail(todo);
                     }}
-                    cellWidth={160}
                   />
                 </div>
               );

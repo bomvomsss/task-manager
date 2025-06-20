@@ -1,15 +1,17 @@
 "use client";
+import supabase from "@/lib/supabaseClient";
 import { useState, useEffect } from "react";
-
-// 할일 아이템 컨트롤 컴포넌트
+import { useTodos } from "@/app/context/TodoContext";
+import { toStatusId } from "./useAddItems";
 
 export type TodoStatus = "todo" | "doing" | "done";
 
 export interface TodoItemType {
-  id: number; // 고유 번호
-  text: string; // 제목
-  tags: string[]; // 태그
-  dates: string[]; // 시작, 종료 날짜
+  id: string;
+  title: string; // 제목
+  tags?: string[]; // 태그
+  start_date: string; // 시작 날짜
+  end_date: string; // 종료 날짜
   contents: string; // 내용
   status: TodoStatus; // 상태
 }
@@ -17,38 +19,41 @@ export interface TodoItemType {
 export default function useCtrlItems() {
   const [items, setItems] = useState<TodoItemType[]>([]);
   const [selectedItem, setSelectedItem] = useState<TodoItemType | null>(null);
+  const { requestDelete } = useTodos();
 
-  // ✅ JSON 파일에서 초기 데이터 불러오기
   useEffect(() => {
-    fetch("/test-todos.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // 만약 dates가 배열 한 개만 있는 경우 [start, end]로 맞춰줌
-        const normalized = data.map((item: TodoItemType) => ({
+    const fetchTodos = async () => {
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("created_at", { ascending: true }); // 필요시 정렬 기준 조정
+
+      if (error) {
+        console.error("Supabase fetch error:", error);
+      } else if (data) {
+        const normalized = data.map((item) => ({
           ...item,
-          dates:
-            item.dates.length === 1
-              ? [item.dates[0], item.dates[0]]
-              : item.dates,
+          start_date: item.start_date ?? "",
+          end_date: item.end_date ?? "",
         }));
+
         setItems(normalized);
-      })
-      .catch(console.error);
-  }, []);
+      }
+    };
+
+    fetchTodos();
+  }, [setItems]);
 
   const handleAddItem = () => {
-    const newItem: TodoItemType = {
-      id: Date.now(),
-      text: "",
+    const newItem: Omit<TodoItemType, "id"> = {
+      title: "",
       tags: [],
       contents: "",
-      dates: [
-        new Date().toISOString().split("T")[0],
-        new Date().toISOString().split("T")[0],
-      ],
+      start_date: new Date().toISOString().split("T")[0],
+      end_date: new Date().toISOString().split("T")[0],
       status: "todo", // 기본값
     };
-    setSelectedItem(newItem);
+    setSelectedItem(newItem as TodoItemType);
   };
 
   const handleOpenDetail = (item: TodoItemType) => {
@@ -59,20 +64,69 @@ export default function useCtrlItems() {
     setSelectedItem(null);
   };
 
-  const handleSaveItem = (updated: TodoItemType) => {
-    setItems((prev) => {
-      const exists = prev.some((item) => item.id === updated.id);
-      if (exists) {
-        return prev.map((item) => (item.id === updated.id ? updated : item));
+  const handleSaveItem = async (item: TodoItemType) => {
+    try {
+      if (item.id !== "" && items.find((i) => i.id === item.id)) {
+        const { data, error } = await supabase
+          .from("todos")
+          .update({
+            title: item.title,
+            tags: item.tags ?? [],
+            start_date: item.start_date,
+            end_date: item.end_date,
+            contents: item.contents ?? "",
+            status: item.status,
+          })
+          .eq("id", item.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        if (data) {
+          setItems((prev) =>
+            prev.map((i) =>
+              i.id === item.id
+                ? { ...i, ...data, contents: data.contents ?? i.contents }
+                : i
+            )
+          );
+        }
       } else {
-        return [...prev, updated];
+        const { data, error } = await supabase
+          .from("todos")
+          .insert([
+            {
+              title: item.title,
+              tags: item.tags ?? [],
+              start_date: item.start_date,
+              end_date: item.end_date,
+              contents: item.contents ?? "",
+              status: item.status,
+            },
+          ])
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        setItems((prev) => [...prev, data]);
       }
-    });
-    handleCloseDetail();
+
+      setSelectedItem(null);
+    } catch (error) {
+      console.error("Failed to save item:", error);
+      alert("저장 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleDeleteItem = (item: TodoItemType) => {
+    const statusId = toStatusId(item.status);
+    requestDelete(statusId, String(item.id));
   };
 
   // ✅ updateItem 함수: 드래그 등으로 날짜 변경 시 사용
-  const updateItem = (id, newDates) => {
+  const updateItem = (id: string, newDates: string[]) => {
     setItems((prev) =>
       prev.map((item) => (item.id === id ? { ...item, dates: newDates } : item))
     );
@@ -86,19 +140,7 @@ export default function useCtrlItems() {
     handleOpenDetail,
     handleCloseDetail,
     handleSaveItem,
+    handleDeleteItem,
     updateItem,
   };
-}
-export function calculateDateFromCursor(x: number, baseDate: Date): string {
-  const cellWidth = 100;
-  const daysFromStart = Math.floor(x / cellWidth);
-  const targetDate = new Date(baseDate);
-  targetDate.setDate(baseDate.getDate() + daysFromStart);
-  return targetDate.toISOString().split("T")[0]; // yyyy-mm-dd
-}
-export function generateDateRange(
-  start: string,
-  end: string
-): [string, string] {
-  return new Date(start) < new Date(end) ? [start, end] : [end, start];
 }

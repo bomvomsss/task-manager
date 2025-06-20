@@ -57,7 +57,7 @@
   color: #ffd8e5;
 }
 .selected {
-  background: #f5eaffa9;
+  /* background: #f5eaffa9; */
   font-weight: 700;
 }
 .today span {

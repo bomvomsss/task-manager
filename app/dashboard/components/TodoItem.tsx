@@ -1,25 +1,25 @@
 import { TodoItemType } from "../../hooks/useCtrlItems";
 
 interface TodoItemProps extends TodoItemType {
-  onClick: () => void;
+  onDoubleClick: () => void;
   draggable?: boolean;
   onDragStart?: (e: React.DragEvent) => void;
 }
 
 export default function TodoItem({
-  text,
-  onClick,
+  title,
+  onDoubleClick,
   draggable,
   onDragStart,
 }: TodoItemProps) {
   return (
     <div
       className='todo-item'
-      onClick={onClick}
+      onDoubleClick={onDoubleClick}
       draggable={draggable}
       onDragStart={onDragStart}
     >
-      {text}
+      {title}
     </div>
   );
 }

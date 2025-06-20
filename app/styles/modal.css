@@ -23,6 +23,6 @@
   display: flex;
   gap: 15px;
 }
-.flexBox > div {
+.flexBox > form {
   flex: 1;
 }

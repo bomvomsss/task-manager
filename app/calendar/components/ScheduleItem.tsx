@@ -1,15 +1,10 @@
-import useCtrlItems from "@/app/hooks/useCtrlItems";
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
 
-export interface ScheduleItemProps {
-  itemId: number;
-  text: string;
-  status: "todo" | "doing" | "done";
-  dates: [string, string];
-  currentDate: string;
+export interface ScheduleItemProps extends TodoItemType {
   onDoubleClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
-  cellWidth: number;
+  // currentDate: string;
 }
 
 const statusColors = {
@@ -19,19 +14,17 @@ const statusColors = {
 };
 
 export default function ScheduleItem({
-  itemId,
-  text,
+  title,
   status,
   onDoubleClick,
-}: ScheduleItemProps) {
-  const id = itemId;
-
+}: // currentDate,
+ScheduleItemProps) {
   return (
     <div
       className={`schedule-item ${statusColors[status]}`}
       onDoubleClick={onDoubleClick}
     >
-      {text}
+      {title}
     </div>
   );
 }

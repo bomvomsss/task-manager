@@ -48,13 +48,14 @@ export default function CalendarBody() {
           const weekStart = week[0].date;
           const weekEnd = week[week.length - 1].date;
           let weekTodos = items.filter((todo) => {
-            const [start, end] = todo.dates;
-            return start <= weekEnd && end >= weekStart;
+            const startDate = todo.start_date;
+            const endDate = todo.end_date;
+            return startDate <= weekEnd && endDate >= weekStart;
           });
           // 시작일 오름차순 정렬
           weekTodos = weekTodos.slice().sort((a, b) => {
-            if (a.dates[0] < b.dates[0]) return -1;
-            if (a.dates[0] > b.dates[0]) return 1;
+            if (a.start_date < b.start_date) return -1;
+            if (a.start_date > b.start_date) return 1;
             return 0;
           });
           return (
@@ -62,7 +63,6 @@ export default function CalendarBody() {
               key={`week-${weekIdx}`}
               week={week}
               weekTodos={weekTodos}
-              weekIdx={weekIdx}
               handleOpenDetail={handleOpenDetail}
               selectedDate={selectedDate}
               currentDate={currentDate}

@@ -1,13 +1,13 @@
 "use client";
-
+import supabase from "@/lib/supabaseClient";
 import { createContext, useContext, useState, ReactNode } from "react";
 import DeleteConfirmModal from "../components/DeleteConfirm";
 
-export type StatusId = "todo" | "inprogress" | "done";
+export type StatusId = "todo" | "doing" | "done";
 
 export interface TodoItem {
   id: string;
-  text: string;
+  title: string;
   tags: string[];
 }
 
@@ -26,7 +26,7 @@ const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
 const initialTodos: TodosByColumn = {
   todo: [],
-  inprogress: [],
+  doing: [],
   done: [],
 };
 
@@ -71,8 +71,12 @@ export function TodoProvider({ children }: { children: ReactNode }) {
   };
 
   // 실제 삭제 처리
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (deleteTarget) {
+      // 1. supabase에서 삭제
+      await supabase.from("todos").delete().eq("id", deleteTarget.itemId);
+
+      // 2. 상태에서 삭제
       setTodos((prev) => ({
         ...prev,
         [deleteTarget.statusId]: prev[deleteTarget.statusId].filter(

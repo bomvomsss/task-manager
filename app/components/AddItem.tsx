@@ -3,12 +3,17 @@ import { BsXCircleFill } from "react-icons/bs";
 import useAddItems, { AddItemProps } from "../hooks/useAddItems";
 import { TodoStatus } from "../hooks/useCtrlItems";
 import DateRangeInput from "./DateValidation";
-import { useTodos } from "../context/TodoContext";
 
-export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
+export default function AddItem({
+  item,
+  onSave,
+  onDelete,
+  show,
+  onClose,
+}: AddItemProps) {
   const {
-    text,
-    setText,
+    title,
+    setTitle,
     contents,
     setContents,
     tagInput,
@@ -24,19 +29,18 @@ export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
     setEndDate,
     status,
     setStatus,
-    toStatusId,
-  } = useAddItems({ item, onSave, show, onClose });
-  const { requestDelete } = useTodos();
+  } = useAddItems({ item, onSave, onDelete, show, onClose });
+
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>
-          <Form.Group controlId='titleEditCtrl'>
+          <Form.Group controlId={"titleCtrl-" + item?.id}>
             <Form.Label className='mb-2'>Task</Form.Label>
             <Form.Control
               type='text'
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               name='title'
               placeholder='제목을 입력해 주세요'
             />
@@ -44,15 +48,17 @@ export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group className='mb-3 flexBox' controlId='dateCtrl'>
+        <Form.Group className='mb-3'>
           <DateRangeInput
             startDate={startDate}
             endDate={endDate}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            startId={`${item?.id}-start`}
+            endId={`${item?.id}-end`}
           />
         </Form.Group>
-        <Form.Group className='mb-3' controlId='statusCtrl'>
+        <Form.Group className='mb-3' controlId={"statusCtrl-" + item?.id}>
           <Form.Label className='mb-2'>상태</Form.Label>
           <Form.Select
             value={status}
@@ -63,7 +69,7 @@ export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
             <option value='done'>완료</option>
           </Form.Select>
         </Form.Group>
-        <Form.Group className='mb-3' controlId='contentEditCtrl'>
+        <Form.Group className='mb-3' controlId={"contentCtrl-" + item?.id}>
           <Form.Label className='mb-2'>내용</Form.Label>
           <Form.Control
             as='textarea'
@@ -74,7 +80,7 @@ export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
             name='contents'
           />
         </Form.Group>
-        <Form.Group className='mb-3' controlId='tagAddedCtrl'>
+        <Form.Group className='mb-3' controlId={"tagCtrl-" + item?.id}>
           <div className='d-flex'>
             <Form.Control
               type='text'
@@ -111,17 +117,17 @@ export default function AddItem({ item, onSave, show, onClose }: AddItemProps) {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={onClose}>
-          취소
-        </Button>
         <Button variant='primary' onClick={handleSave}>
           저장
         </Button>
+        <Button variant='secondary' onClick={onClose}>
+          취소
+        </Button>
         <Button
           variant='danger'
-          onClick={() =>
-            item && requestDelete(toStatusId(item.status), String(item.id))
-          }
+          onClick={() => {
+            if (item) onDelete(item);
+          }}
         >
           삭제
         </Button>

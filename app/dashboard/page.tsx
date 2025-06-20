@@ -6,6 +6,7 @@ import BoardHeader from "./components/BoardHeader";
 import AddItem from "../components/AddItem";
 import useCtrlItems, { TodoItemType, TodoStatus } from "../hooks/useCtrlItems";
 import BoardBody from "./components/BoardBody";
+import supabase from "@/lib/supabaseClient";
 
 export default function DashBoard() {
   const {
@@ -16,11 +17,32 @@ export default function DashBoard() {
     handleOpenDetail,
     handleCloseDetail,
     handleSaveItem,
+    handleDeleteItem,
   } = useCtrlItems();
+
   useEffect(() => {
-    fetch("/test-todos.json")
-      .then((res) => res.json())
-      .then((data) => setItems(data));
+    const fetchTodos = async () => {
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Supabase fetch error:", error);
+      } else if (data) {
+        const normalized = data.map((item) => ({
+          ...item,
+          dates:
+            item.dates?.length === 1
+              ? [item.dates[0], item.dates[0]]
+              : item.dates,
+        }));
+
+        setItems(normalized);
+      }
+    };
+
+    fetchTodos();
   }, [setItems]);
 
   const dragItem = useRef<TodoItemType | null>(null);
@@ -44,6 +66,7 @@ export default function DashBoard() {
         item={selectedItem}
         onSave={handleSaveItem}
         onClose={handleCloseDetail}
+        onDelete={handleDeleteItem}
       />
 
       <BoardBody

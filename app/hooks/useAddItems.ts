@@ -8,15 +8,15 @@ export interface AddItemProps {
   item: TodoItemType | null;
   onSave: (item: TodoItemType) => void;
   onClose: () => void;
-  onDelete?: () => void;
+  onDelete?: (item: TodoItemType) => void;
 }
-export function toStatusId(status: TodoStatus): "todo" | "inprogress" | "done" {
-  if (status === "doing") return "inprogress";
+export function toStatusId(status: TodoStatus): "todo" | "doing" | "done" {
+  if (status === "doing") return "doing";
   return status;
 }
 
 export default function useAddItems({ item, onSave }: AddItemProps) {
-  const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
@@ -26,11 +26,11 @@ export default function useAddItems({ item, onSave }: AddItemProps) {
 
   useEffect(() => {
     if (item) {
-      setText(item.text);
-      setContents("");
+      setTitle(item.title);
+      setContents(item.contents ?? "");
       setTags(item.tags ?? []);
-      setStartDate(item.dates?.[0] ?? "");
-      setEndDate(item.dates?.[1] ?? "");
+      setStartDate(item.start_date);
+      setEndDate(item.end_date ?? "");
       setStatus(item.status ?? "todo");
     }
   }, [item]);
@@ -40,13 +40,14 @@ export default function useAddItems({ item, onSave }: AddItemProps) {
       alert("시작 날짜는 종료 날짜보다 이후일 수 없습니다.");
       return;
     }
-    if (item && text.trim() !== "") {
+    if (item && title.trim() !== "") {
       onSave({
         ...item,
-        text,
+        title,
         tags,
         contents,
-        dates: startDate && endDate ? [startDate, endDate] : [],
+        start_date: startDate,
+        end_date: endDate,
         status,
       });
     }
@@ -72,8 +73,8 @@ export default function useAddItems({ item, onSave }: AddItemProps) {
   };
 
   return {
-    text,
-    setText,
+    title,
+    setTitle,
     contents,
     setContents,
     tagInput,

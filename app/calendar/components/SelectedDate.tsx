@@ -1,33 +1,44 @@
 "use client";
 import useCalendarContext from "../hooks/useCalendarContext";
 import { useEffect, useState } from "react";
-
-interface Todo {
-  id: number;
-  text: string;
-  tags: string[];
-  dates: string[];
-  status: "todo" | "doing" | "done";
-}
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
+import supabase from "@/lib/supabaseClient";
 
 export default function SelectedDate() {
   const { selectedDate } = useCalendarContext();
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [items, setItems] = useState<TodoItemType[]>([]);
 
   useEffect(() => {
-    fetch("/test-todos.json")
-      .then((res) => res.json())
-      .then(setTodos)
-      .catch((err) => console.error("Error loading todos", err));
-  }, []);
+    const fetchTodos = async () => {
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("created_at", { ascending: true }); // 필요시 정렬 기준 조정
+
+      if (error) {
+        console.error("Supabase fetch error:", error);
+      } else if (data) {
+        const normalized = data.map((item) => ({
+          ...item,
+          start_date: item.start_date ?? "",
+          end_date: item.end_date ?? "",
+        }));
+
+        setItems(normalized);
+      }
+    };
+
+    fetchTodos();
+  }, [setItems]);
 
   if (!selectedDate?.date) return null;
 
   const yyyyMMdd = selectedDate.date;
 
   // 기간 내에 포함된 일정도 모두 표시
-  const matchedTodos = todos.filter((todo) => {
-    const [start, end] = todo.dates.length === 2 ? todo.dates : [todo.dates[0], todo.dates[0]];
+  const matchedTodos = items.filter((item) => {
+    const start = item.start_date;
+    const end = item.end_date;
     return start <= yyyyMMdd && end >= yyyyMMdd;
   });
 
@@ -40,7 +51,7 @@ export default function SelectedDate() {
         <ul>
           {matchedTodos.map((todo) => (
             <li key={todo.id}>
-              <strong>{todo.text}</strong> ({todo.status})
+              <strong>{todo.title}</strong> ({todo.status})
             </li>
           ))}
         </ul>

@@ -8,11 +8,15 @@ export default function DateRangeInput({
   endDate,
   setStartDate,
   setEndDate,
+  startId,
+  endId,
 }: {
   startDate: string;
   endDate: string;
   setStartDate: (value: string) => void;
   setEndDate: (value: string) => void;
+  startId: string;
+  endId: string;
 }) {
   const [error, setError] = useState("");
 
@@ -25,26 +29,32 @@ export default function DateRangeInput({
   }, [startDate, endDate]);
 
   return (
-    <Form.Group className='mb-2' controlId='dateCtrl'>
+    <Form.Group className='mb-2'>
       <div className='flexBox'>
-        <div>
-          <Form.Label className='mb-2'>시작 날짜</Form.Label>
+        <form>
+          <Form.Label className='mb-2' htmlFor={startId}>
+            시작 날짜
+          </Form.Label>
           <Form.Control
             type='date'
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             name='start date'
+            id={startId}
           />
-        </div>
-        <div>
-          <Form.Label className='mb-2'>종료 날짜</Form.Label>
+        </form>
+        <form>
+          <Form.Label className='mb-2' htmlFor={endId}>
+            종료 날짜
+          </Form.Label>
           <Form.Control
             type='date'
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             name='end date'
+            id={endId}
           />
-        </div>
+        </form>
       </div>
       {error && <div className='text-danger mt-2'>{error}</div>}
     </Form.Group>
