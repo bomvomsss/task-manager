@@ -6,7 +6,6 @@ interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
   weekIdx: number;
-  cellWidths: number[];
   handleOpenDetail: (item: CalendarItem) => void;
   selectedDate: any;
   currentDate: any;
@@ -17,7 +16,6 @@ export default function WeekRow({
   week,
   weekTodos,
   weekIdx,
-  cellWidths,
   handleOpenDetail,
   selectedDate,
   currentDate,
@@ -74,10 +72,9 @@ export default function WeekRow({
                     status={todo.status}
                     dates={[todo.dates[0], todo.dates[1] ?? todo.dates[0]]}
                     currentDate={date.date}
-                    onClick={() => {
+                    onDoubleClick={() => {
                       handleOpenDetail(todo);
                     }}
-                    cellWidth={cellWidths[cellIndex] || 160}
                   />
                 </div>
               );

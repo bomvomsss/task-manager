@@ -34,7 +34,7 @@ export default function CalendarBody() {
 
   return (
     <Container>
-      <div className="weekWrapper">
+      <div className='weekWrapper'>
         {weeks.map((week: string, index) => (
           <div
             key={week}
@@ -46,7 +46,7 @@ export default function CalendarBody() {
           </div>
         ))}
       </div>
-      <div className="dayWrapper">
+      <div className='dayWrapper'>
         {weeksInMonth.map((week, weekIdx) => {
           // 해당 주에 걸친 일정만 필터링
           const weekStart = week[0].date;
@@ -67,7 +67,6 @@ export default function CalendarBody() {
               week={week}
               weekTodos={weekTodos}
               weekIdx={weekIdx}
-              cellWidths={cellWidths}
               handleOpenDetail={handleOpenDetail}
               selectedDate={selectedDate}
               currentDate={currentDate}
