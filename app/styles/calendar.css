@@ -80,7 +80,7 @@
   border-radius: 20px;
   color: white;
   word-break: break-word;
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
   z-index: 1;
   font-weight: 300;
@@ -105,4 +105,15 @@
   padding: 12px;
   border-radius: 8px;
   margin-top: 1rem;
+}
+.resize-handle {
+  width: 10px;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: ew-resize;
+  z-index: 10;
+  background: transparent;
 }

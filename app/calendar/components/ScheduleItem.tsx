@@ -1,3 +1,6 @@
+import useCtrlItems, { generateDateRange } from "@/app/hooks/useCtrlItems";
+import { useResizeSchedule } from "../hooks/useResizeSchedule";
+
 export interface ScheduleItemProps {
   itemId: number;
   text: string;
@@ -7,6 +10,7 @@ export interface ScheduleItemProps {
   onClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
+  cellWidth: number;
 }
 
 const statusColors = {
@@ -16,19 +20,27 @@ const statusColors = {
 };
 
 export default function ScheduleItem({
+  itemId,
   text,
   status,
+  dates,
   onClick,
+  cellWidth,
 }: ScheduleItemProps) {
+  const { updateItem } = useCtrlItems(); // 일정 수정 훅
+  const id = itemId;
+
+  const { onMouseDown: handleMouseDown } = useResizeSchedule({
+    dates,
+    cellWidth,
+    updateItem,
+    id,
+  });
+
   return (
     <div className={`schedule-item ${statusColors[status]}`} onClick={onClick}>
       {text}
-      <div
-        className='resize-handle'
-        onMouseDown={(e) => {
-          e.stopPropagation();
-        }}
-      />
+      <div className='resize-handle' onMouseDown={handleMouseDown} />
     </div>
   );
 }

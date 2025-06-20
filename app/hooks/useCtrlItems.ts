@@ -72,7 +72,7 @@ export default function useCtrlItems() {
   };
 
   // ✅ updateItem 함수: 드래그 등으로 날짜 변경 시 사용
-  const updateItem = (id: number, newDates: [string, string]) => {
+  const updateItem = (id, newDates) => {
     setItems((prev) =>
       prev.map((item) => (item.id === id ? { ...item, dates: newDates } : item))
     );
@@ -88,4 +88,17 @@ export default function useCtrlItems() {
     handleSaveItem,
     updateItem,
   };
+}
+export function calculateDateFromCursor(x: number, baseDate: Date): string {
+  const cellWidth = 100;
+  const daysFromStart = Math.floor(x / cellWidth);
+  const targetDate = new Date(baseDate);
+  targetDate.setDate(baseDate.getDate() + daysFromStart);
+  return targetDate.toISOString().split("T")[0]; // yyyy-mm-dd
+}
+export function generateDateRange(
+  start: string,
+  end: string
+): [string, string] {
+  return new Date(start) < new Date(end) ? [start, end] : [end, start];
 }

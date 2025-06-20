@@ -6,6 +6,9 @@ interface DateInfo {
   month: string;
   day: string;
 }
+export type CalendarDate = DateInfo & { date: string; dayIndexOfWeek: number };
+export type { TodoItemType as CalendarItem } from "@/app/hooks/useCtrlItems";
+
 export interface CalendarContextType {
   currentDate: DateInfo;
   daysInMonth: (DateInfo & { date: string; dayIndexOfWeek: number })[];
