@@ -4,7 +4,6 @@ import AddItem from "@/app/components/AddItem";
 import { useTodos } from "@/app/context/TodoContext";
 import { toStatusId } from "@/app/hooks/useAddItems";
 import useCalendarContext from "../hooks/useCalendarContext";
-import useCellWidths from "../hooks/useCellWidths";
 import WeekRow from "./WeekRow";
 
 export default function CalendarBody() {
@@ -28,9 +27,6 @@ export default function CalendarBody() {
   for (let i = 0; i < daysInMonth.length; i += 7) {
     weeksInMonth.push(daysInMonth.slice(i, i + 7));
   }
-
-  // 날짜 셀별 ref와 width 측정 (커스텀 훅 사용)
-  const { dayRefs, cellWidths } = useCellWidths(daysInMonth.length);
 
   return (
     <Container>
@@ -70,7 +66,6 @@ export default function CalendarBody() {
               handleOpenDetail={handleOpenDetail}
               selectedDate={selectedDate}
               currentDate={currentDate}
-              dayRefs={dayRefs}
             />
           );
         })}

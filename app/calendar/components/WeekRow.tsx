@@ -1,5 +1,5 @@
 import ScheduleItem from "./ScheduleItem";
-import useTrackMatrix, { TrackTodo } from "../hooks/useTrackMatrix";
+import useTrackMatrix from "../hooks/useTrackMatrix";
 import { CalendarItem, CalendarDate } from "../hooks/useCalendarContext";
 
 interface WeekRowProps {
@@ -9,7 +9,6 @@ interface WeekRowProps {
   handleOpenDetail: (item: CalendarItem) => void;
   selectedDate: any;
   currentDate: any;
-  dayRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
 }
 
 export default function WeekRow({
@@ -19,7 +18,6 @@ export default function WeekRow({
   handleOpenDetail,
   selectedDate,
   currentDate,
-  dayRefs,
 }: WeekRowProps) {
   const trackMatrix = useTrackMatrix(week, weekTodos);
   return (
@@ -40,12 +38,8 @@ export default function WeekRow({
         ]
           .filter(Boolean)
           .join(" ");
-        const cellIndex = weekIdx * 7 + dayIdx;
         return (
           <div
-            ref={(el) => {
-              dayRefs.current[cellIndex] = el;
-            }}
             onClick={() => selectedDate.selectDate(date.date)}
             className={classNames}
             key={`dayItem-${date.year}-${date.month}-${date.day}`}
@@ -75,6 +69,7 @@ export default function WeekRow({
                     onDoubleClick={() => {
                       handleOpenDetail(todo);
                     }}
+                    cellWidth={160}
                   />
                 </div>
               );

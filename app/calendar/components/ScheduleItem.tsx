@@ -1,3 +1,5 @@
+import useCtrlItems from "@/app/hooks/useCtrlItems";
+
 export interface ScheduleItemProps {
   itemId: number;
   text: string;
@@ -7,6 +9,7 @@ export interface ScheduleItemProps {
   onDoubleClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
+  cellWidth: number;
 }
 
 const statusColors = {
@@ -19,9 +22,10 @@ export default function ScheduleItem({
   itemId,
   text,
   status,
-  dates,
   onDoubleClick,
 }: ScheduleItemProps) {
+  const id = itemId;
+
   return (
     <div
       className={`schedule-item ${statusColors[status]}`}
