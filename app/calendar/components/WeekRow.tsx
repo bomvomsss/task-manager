@@ -6,7 +6,7 @@ interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
   handleOpenDetail: (item: CalendarItem) => void;
-  selectedDate: any;
+  // selectedDate: any;
   currentDate: any;
 }
 
@@ -14,7 +14,7 @@ export default function WeekRow({
   week,
   weekTodos,
   handleOpenDetail,
-  selectedDate,
+  // selectedDate,
   currentDate,
 }: WeekRowProps) {
   const trackMatrix = useTrackMatrix(week, weekTodos);
@@ -22,7 +22,7 @@ export default function WeekRow({
     <div className='weekRow' style={{ display: "flex" }}>
       {week.map((date, dayIdx) => {
         const isCurrentMonth = currentDate.month === date.month;
-        const isSelectedDate = selectedDate?.date === date.date;
+        // const isSelectedDate = selectedDate?.date === date.date;
         const isCurrentDay =
           currentDate.year === date.year &&
           currentDate.month === date.month &&
@@ -32,7 +32,7 @@ export default function WeekRow({
         const classNames = [
           "dayItem",
           isCurrentMonth ? "currentMonth" : "otherMonth",
-          isSelectedDate ? "selected" : "",
+          // isSelectedDate ? "selected" : "",
           isSunday ? "sunday" : "",
           isSaturday ? "saturday" : "",
           isCurrentDay ? "today" : "",
@@ -41,7 +41,7 @@ export default function WeekRow({
           .join(" ");
         return (
           <div
-            onClick={() => selectedDate.selectDate(date.date)}
+            // onClick={() => selectedDate.selectDate(date.date)}
             className={classNames}
             key={`dayItem-${date.year}-${date.month}-${date.day}`}
           >
@@ -68,7 +68,7 @@ export default function WeekRow({
                     start_date={todo.start_date}
                     end_date={todo.end_date}
                     contents={todo.contents}
-                    // currentDate={String(date.date)}
+                    currentDate={String(date.date)}
                     onDoubleClick={() => {
                       handleOpenDetail(todo);
                     }}

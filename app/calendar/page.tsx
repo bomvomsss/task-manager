@@ -3,7 +3,6 @@ import "../styles/calendar.css";
 import CalendarBody from "./components/CalendarBody";
 import CalendarHeader from "./components/CalendarHeader";
 import AddItem from "../components/AddItem";
-import SelectedDate from "./components/SelectedDate";
 import { CalendarContext } from "./hooks/useCalendarContext";
 import useCtrlItems from "../hooks/useCtrlItems";
 import useCalendar from "./hooks/useCalendar";
@@ -22,7 +21,6 @@ export default function CalendarPage() {
         onSave={handleSaveItem}
         onClose={handleCloseDetail}
       />
-      <SelectedDate />
     </CalendarContext.Provider>
   );
 }

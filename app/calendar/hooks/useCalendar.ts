@@ -1,3 +1,5 @@
+"use client";
+import supabase from "@/lib/supabaseClient";
 import {
   startOfMonth,
   endOfMonth,
@@ -20,7 +22,7 @@ export default function useCalendar(): CalendarContextType {
     dayIndexOfWeek: number;
   };
   const [daysInMonth, setDaysInMonth] = useState<DayInMonth[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  // const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [scheduledDate, setScheduledDate] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState<{
     year: string;
@@ -67,23 +69,28 @@ export default function useCalendar(): CalendarContextType {
   const [items, setItems] = useState<TodoItemType[]>([]);
   const [selectedItem, setSelectedItem] = useState<TodoItemType | null>(null);
 
-  // ✅ test-todos.json에서 일정 불러오기 (대시보드와 동일)
   useEffect(() => {
-    fetch("/test-todos.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // dates가 1개만 있으면 [start, end]로 보정
-        const normalized: TodoItemType[] = data.map((item: TodoItemType) => ({
+    const fetchTodos = async () => {
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("created_at", { ascending: true }); // 필요시 정렬 기준 조정
+
+      if (error) {
+        console.error("Supabase fetch error:", error);
+      } else if (data) {
+        const normalized = data.map((item) => ({
           ...item,
-          dates:
-            item.dates.length === 1
-              ? [item.dates[0], item.dates[0]]
-              : item.dates,
+          start_date: item.start_date ?? "",
+          end_date: item.end_date ?? "",
         }));
+
         setItems(normalized);
-      })
-      .catch(console.error);
-  }, []);
+      }
+    };
+
+    fetchTodos();
+  }, [setItems]);
 
   // 할 일 상세/저장/삭제 등 메서드
   const handleOpenDetail = (item: TodoItemType) => setSelectedItem(item);
@@ -150,10 +157,10 @@ export default function useCalendar(): CalendarContextType {
       handlePrevMonth,
       handleNextMonth,
     },
-    selectedDate: {
-      date: selectedDate,
-      selectDate: setSelectedDate,
-    },
+    // selectedDate: {
+    //   date: selectedDate,
+    //   selectDate: setSelectedDate,
+    // },
     scheduledDate: {
       date: scheduledDate,
       scheduled: setScheduledDate,

@@ -4,7 +4,7 @@ export interface ScheduleItemProps extends TodoItemType {
   onDoubleClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
-  // currentDate: string;
+  currentDate: string;
 }
 
 const statusColors = {

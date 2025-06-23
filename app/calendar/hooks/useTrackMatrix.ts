@@ -18,7 +18,8 @@ export default function useTrackMatrix(
 ): (TrackTodo | null)[][] {
   const trackMatrix: (TrackTodo | null)[][] = [];
   weekTodos.forEach((todo) => {
-    const [start, end] = todo.dates;
+    const start = todo.start_date;
+    const end = todo.end_date;
     const weekStart = week[0].date;
     const weekEnd = week[week.length - 1].date;
     const blockStart = start < weekStart ? weekStart : start;

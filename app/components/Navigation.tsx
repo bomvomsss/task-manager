@@ -10,7 +10,7 @@ export default function Navigation() {
       </div>
       <Nav defaultActiveKey='/' className='flex-column'>
         <Nav.Item>
-          <Nav.Link as={Link} className='py-3' href='/'>
+          <Nav.Link as={Link} className='py-3' href='/main'>
             Main
           </Nav.Link>
         </Nav.Item>

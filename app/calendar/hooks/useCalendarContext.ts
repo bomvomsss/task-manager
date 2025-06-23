@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext } from "react";
 import { TodoItemType } from "@/app/hooks/useCtrlItems";
 
@@ -18,10 +19,10 @@ export interface CalendarContextType {
     handlePrevMonth: () => void;
     handleNextMonth: () => void;
   };
-  selectedDate: {
-    date: string | null;
-    selectDate: (date: string) => void;
-  };
+  // selectedDate: {
+  //   date: string | null;
+  //   selectDate: (date: string) => void;
+  // };
   scheduledDate: {
     date: string | null;
     scheduled: (date: string) => void;

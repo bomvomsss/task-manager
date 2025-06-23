@@ -9,7 +9,7 @@ import WeekRow from "./WeekRow";
 export default function CalendarBody() {
   const {
     daysInMonth,
-    selectedDate,
+    // selectedDate,
     currentDate,
     items,
     selectedItem,
@@ -64,7 +64,7 @@ export default function CalendarBody() {
               week={week}
               weekTodos={weekTodos}
               handleOpenDetail={handleOpenDetail}
-              selectedDate={selectedDate}
+              // selectedDate={selectedDate}
               currentDate={currentDate}
             />
           );

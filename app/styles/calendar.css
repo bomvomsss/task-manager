@@ -89,16 +89,16 @@
   margin-top: 10px;
 }
 .schedule-todo {
-  background-color: #a4cbf4;
+  background-color: #a4cbf45e;
   color: black;
 }
 
 .schedule-doing {
-  background-color: #b28bc9;
+  background-color: #b28bc95e;
 }
 
 .schedule-done {
-  background-color: #77ac83;
+  background-color: #77ac835e;
 }
 .selected-date-details {
   background-color: #f9f9f9;
