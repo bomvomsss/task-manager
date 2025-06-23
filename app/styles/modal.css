@@ -3,8 +3,9 @@
 }
 .badge {
   cursor: pointer;
-  font-size: 18px;
+  font-size: 15px;
   vertical-align: sub;
+  font-weight: 500;
 }
 .modal-header {
   align-items: baseline;

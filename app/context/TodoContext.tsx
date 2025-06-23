@@ -83,8 +83,8 @@ export function TodoProvider({ children }: { children: ReactNode }) {
           (i) => i.id !== deleteTarget.itemId
         ),
       }));
-      setDeleteTarget(null);
       setShowDeleteModal(false);
+      setDeleteTarget(null);
     }
   };
 

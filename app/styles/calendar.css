@@ -60,11 +60,11 @@
   /* background: #f5eaffa9; */
   font-weight: 700;
 }
+.today {
+  background: #f3f3f3;
+}
 .today span {
-  background: #5e4387;
-  color: #fff;
-  padding: 5px 6px;
-  border-radius: 15px;
+  font-weight: bold;
 }
 .addBtn {
   margin-left: auto;
@@ -77,8 +77,8 @@
 .schedule-item {
   padding: 5px 15px;
   font-size: 15px;
-  border-radius: 20px;
-  color: white;
+  border-radius: 5px;
+  color: black;
   word-break: break-word;
   cursor: pointer;
   position: relative;
@@ -90,7 +90,6 @@
 }
 .schedule-todo {
   background-color: #a4cbf45e;
-  color: black;
 }
 
 .schedule-doing {

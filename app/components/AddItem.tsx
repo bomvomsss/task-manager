@@ -123,14 +123,20 @@ export default function AddItem({
         <Button variant='secondary' onClick={onClose}>
           취소
         </Button>
-        <Button
-          variant='danger'
-          onClick={() => {
-            if (item) onDelete(item);
-          }}
-        >
-          삭제
-        </Button>
+        {item?.id ? (
+          <Button
+            variant='danger'
+            onClick={() => {
+              if (item) {
+                onDelete(item);
+              }
+            }}
+          >
+            삭제
+          </Button>
+        ) : (
+          " "
+        )}
       </Modal.Footer>
     </Modal>
   );

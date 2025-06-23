@@ -20,10 +20,9 @@ export default function useAddItems({ item, onSave }: AddItemProps) {
   const [contents, setContents] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(item?.start_date ?? "");
+  const [endDate, setEndDate] = useState(item?.end_date ?? "");
   const [status, setStatus] = useState<TodoStatus>("todo");
-
   useEffect(() => {
     if (item) {
       setTitle(item.title);

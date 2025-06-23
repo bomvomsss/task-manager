@@ -6,7 +6,6 @@ interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
   handleOpenDetail: (item: CalendarItem) => void;
-  // selectedDate: any;
   currentDate: any;
 }
 
@@ -14,7 +13,6 @@ export default function WeekRow({
   week,
   weekTodos,
   handleOpenDetail,
-  // selectedDate,
   currentDate,
 }: WeekRowProps) {
   const trackMatrix = useTrackMatrix(week, weekTodos);
@@ -22,17 +20,17 @@ export default function WeekRow({
     <div className='weekRow' style={{ display: "flex" }}>
       {week.map((date, dayIdx) => {
         const isCurrentMonth = currentDate.month === date.month;
-        // const isSelectedDate = selectedDate?.date === date.date;
-        const isCurrentDay =
-          currentDate.year === date.year &&
-          currentDate.month === date.month &&
-          currentDate.day === date.day;
+        // 오늘 날짜 계산을 시스템 날짜 기준으로 변경
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+        const isCurrentDay = date.date === todayStr;
         const isSunday = date.dayIndexOfWeek === 0;
         const isSaturday = date.dayIndexOfWeek === 6;
         const classNames = [
           "dayItem",
           isCurrentMonth ? "currentMonth" : "otherMonth",
-          // isSelectedDate ? "selected" : "",
           isSunday ? "sunday" : "",
           isSaturday ? "saturday" : "",
           isCurrentDay ? "today" : "",
@@ -41,7 +39,6 @@ export default function WeekRow({
           .join(" ");
         return (
           <div
-            // onClick={() => selectedDate.selectDate(date.date)}
             className={classNames}
             key={`dayItem-${date.year}-${date.month}-${date.day}`}
           >
@@ -68,8 +65,7 @@ export default function WeekRow({
                     start_date={todo.start_date}
                     end_date={todo.end_date}
                     contents={todo.contents}
-                    currentDate={String(date.date)}
-                    onDoubleClick={() => {
+                    onClick={() => {
                       handleOpenDetail(todo);
                     }}
                   />

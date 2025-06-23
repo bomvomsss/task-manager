@@ -9,17 +9,18 @@ import useCalendar from "./hooks/useCalendar";
 
 export default function CalendarPage() {
   const calendar = useCalendar();
-  const { handleAddItem, selectedItem, handleSaveItem, handleCloseDetail } =
-    useCtrlItems();
+  const ctrl = useCtrlItems();
+
   return (
-    <CalendarContext.Provider value={calendar}>
-      <CalendarHeader onAddClick={handleAddItem} />
+    <CalendarContext.Provider value={{ ...calendar, ...ctrl }}>
+      <CalendarHeader onAddClick={ctrl.handleAddItem} />
       <CalendarBody />
       <AddItem
-        show={!!selectedItem}
-        item={selectedItem}
-        onSave={handleSaveItem}
-        onClose={handleCloseDetail}
+        show={!!ctrl.selectedItem}
+        item={ctrl.selectedItem}
+        onSave={ctrl.handleSaveItem}
+        onClose={ctrl.handleCloseDetail}
+        onDelete={ctrl.handleDeleteItem}
       />
     </CalendarContext.Provider>
   );

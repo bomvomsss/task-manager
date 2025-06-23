@@ -125,7 +125,6 @@ export default function useCtrlItems() {
     requestDelete(statusId, String(item.id));
   };
 
-  // ✅ updateItem 함수: 드래그 등으로 날짜 변경 시 사용
   const updateItem = (id: string, newDates: string[]) => {
     setItems((prev) =>
       prev.map((item) => (item.id === id ? { ...item, dates: newDates } : item))

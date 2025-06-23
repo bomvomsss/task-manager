@@ -1,10 +1,10 @@
 import { TodoItemType } from "@/app/hooks/useCtrlItems";
 
 export interface ScheduleItemProps extends TodoItemType {
-  onDoubleClick: () => void;
+  onClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
-  currentDate: string;
+  currentDate?: string;
 }
 
 const statusColors = {
@@ -16,14 +16,10 @@ const statusColors = {
 export default function ScheduleItem({
   title,
   status,
-  onDoubleClick,
-}: // currentDate,
-ScheduleItemProps) {
+  onClick,
+}: ScheduleItemProps) {
   return (
-    <div
-      className={`schedule-item ${statusColors[status]}`}
-      onDoubleClick={onDoubleClick}
-    >
+    <div className={`schedule-item ${statusColors[status]}`} onClick={onClick}>
       {title}
     </div>
   );

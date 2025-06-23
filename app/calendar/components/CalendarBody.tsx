@@ -1,23 +1,11 @@
 "use client";
 import { Container } from "react-bootstrap";
-import AddItem from "@/app/components/AddItem";
-import { useTodos } from "@/app/context/TodoContext";
-import { toStatusId } from "@/app/hooks/useAddItems";
 import useCalendarContext from "../hooks/useCalendarContext";
 import WeekRow from "./WeekRow";
 
 export default function CalendarBody() {
-  const {
-    daysInMonth,
-    // selectedDate,
-    currentDate,
-    items,
-    selectedItem,
-    handleOpenDetail,
-    handleCloseDetail,
-    handleSaveItem,
-  } = useCalendarContext();
-  const { requestDelete } = useTodos();
+  const { daysInMonth, currentDate, items, handleOpenDetail } =
+    useCalendarContext();
 
   // 요일 헤더
   const weeks = ["일", "월", "화", "수", "목", "금", "토"];
@@ -47,7 +35,7 @@ export default function CalendarBody() {
           // 해당 주에 걸친 일정만 필터링
           const weekStart = week[0].date;
           const weekEnd = week[week.length - 1].date;
-          let weekTodos = items.filter((todo) => {
+          let weekTodos = (items || []).filter((todo) => {
             const startDate = todo.start_date;
             const endDate = todo.end_date;
             return startDate <= weekEnd && endDate >= weekStart;
@@ -64,27 +52,11 @@ export default function CalendarBody() {
               week={week}
               weekTodos={weekTodos}
               handleOpenDetail={handleOpenDetail}
-              // selectedDate={selectedDate}
               currentDate={currentDate}
             />
           );
         })}
       </div>
-      <AddItem
-        item={selectedItem}
-        onSave={handleSaveItem}
-        onDelete={
-          selectedItem
-            ? () =>
-                requestDelete(
-                  toStatusId(selectedItem.status),
-                  String(selectedItem.id)
-                )
-            : undefined
-        }
-        show={!!selectedItem}
-        onClose={handleCloseDetail}
-      />
     </Container>
   );
 }

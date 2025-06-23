@@ -1,5 +1,4 @@
 "use client";
-import supabase from "@/lib/supabaseClient";
 import {
   startOfMonth,
   endOfMonth,
@@ -9,7 +8,6 @@ import {
   format,
 } from "date-fns";
 import { useState, useEffect } from "react";
-import { TodoItemType } from "@/app/hooks/useCtrlItems";
 import type { CalendarContextType } from "./useCalendarContext";
 
 export default function useCalendar(): CalendarContextType {
@@ -22,7 +20,6 @@ export default function useCalendar(): CalendarContextType {
     dayIndexOfWeek: number;
   };
   const [daysInMonth, setDaysInMonth] = useState<DayInMonth[]>([]);
-  // const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [scheduledDate, setScheduledDate] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState<{
     year: string;
@@ -58,51 +55,12 @@ export default function useCalendar(): CalendarContextType {
     }
     return days;
   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (currentDate?.year && currentDate?.month) {
       const days = generateDaysInMonth(currentDate.year, currentDate.month);
       setDaysInMonth(days);
     }
   }, [currentDate.year, currentDate.month]);
-  // 할 일 관련 상태
-  const [items, setItems] = useState<TodoItemType[]>([]);
-  const [selectedItem, setSelectedItem] = useState<TodoItemType | null>(null);
-
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const { data, error } = await supabase
-        .from("todos")
-        .select("*")
-        .order("created_at", { ascending: true }); // 필요시 정렬 기준 조정
-
-      if (error) {
-        console.error("Supabase fetch error:", error);
-      } else if (data) {
-        const normalized = data.map((item) => ({
-          ...item,
-          start_date: item.start_date ?? "",
-          end_date: item.end_date ?? "",
-        }));
-
-        setItems(normalized);
-      }
-    };
-
-    fetchTodos();
-  }, [setItems]);
-
-  // 할 일 상세/저장/삭제 등 메서드
-  const handleOpenDetail = (item: TodoItemType) => setSelectedItem(item);
-  const handleCloseDetail = () => setSelectedItem(null);
-  const handleSaveItem = (item: TodoItemType) => {
-    setItems((prev) => prev.map((i) => (i.id === item.id ? item : i)));
-    setSelectedItem(null);
-  };
-  const handleDeleteItem = (item: TodoItemType) => {
-    setItems((prev) => prev.filter((i) => i.id !== item.id));
-    setSelectedItem(null);
-  };
 
   // 캘린더 이동 메서드 예시
   const handlePrevYear = () => {
@@ -157,21 +115,9 @@ export default function useCalendar(): CalendarContextType {
       handlePrevMonth,
       handleNextMonth,
     },
-    // selectedDate: {
-    //   date: selectedDate,
-    //   selectDate: setSelectedDate,
-    // },
     scheduledDate: {
       date: scheduledDate,
       scheduled: setScheduledDate,
     },
-    items,
-    setItems,
-    selectedItem,
-    setSelectedItem,
-    handleOpenDetail,
-    handleCloseDetail,
-    handleSaveItem,
-    handleDeleteItem,
-  };
+  } as unknown as CalendarContextType;
 }

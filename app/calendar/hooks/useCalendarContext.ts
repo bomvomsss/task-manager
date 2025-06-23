@@ -19,10 +19,7 @@ export interface CalendarContextType {
     handlePrevMonth: () => void;
     handleNextMonth: () => void;
   };
-  // selectedDate: {
-  //   date: string | null;
-  //   selectDate: (date: string) => void;
-  // };
+
   scheduledDate: {
     date: string | null;
     scheduled: (date: string) => void;
@@ -34,8 +31,6 @@ export interface CalendarContextType {
   setSelectedItem: React.Dispatch<React.SetStateAction<TodoItemType | null>>;
   handleOpenDetail: (item: TodoItemType) => void;
   handleCloseDetail: () => void;
-  handleSaveItem: (item: TodoItemType) => void;
-  handleDeleteItem: (item: TodoItemType) => void;
 }
 
 export const CalendarContext = createContext<CalendarContextType | null>(null);

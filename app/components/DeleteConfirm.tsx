@@ -12,7 +12,7 @@ export default function DeleteConfirmModal({
   onCancel,
 }: Props) {
   return (
-    <Modal show={show} onHide={onCancel} centered>
+    <Modal show={show} onHide={onCancel} centered className='delConfirmModal'>
       <Modal.Body className='text-center'>
         <p>삭제하시겠습니까?</p>
         <div className='d-flex justify-content-center gap-2 mt-3'>
