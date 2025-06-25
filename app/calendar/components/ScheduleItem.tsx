@@ -1,4 +1,4 @@
-import { TodoItemType, TodoStatus } from "@/app/hooks/useCtrlItems";
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
 
 export interface ScheduleItemProps extends TodoItemType {
   onClick: () => void;

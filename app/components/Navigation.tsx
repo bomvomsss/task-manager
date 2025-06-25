@@ -7,7 +7,7 @@ export default function Navigation() {
     <div id='navBar' className={"bg-body-tertiary"}>
       <div className='brand'>
         <h1>
-          <a href='/'>Task Manager</a>
+          <Link href='/'>Task Manager</Link>
         </h1>
       </div>
       <Nav defaultActiveKey='/' className='flex-column'>

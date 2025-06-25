@@ -1,15 +1,18 @@
 import ScheduleItem from "./ScheduleItem";
 import useTrackMatrix from "../hooks/useTrackMatrix";
 import { CalendarItem, CalendarDate } from "../hooks/useCalendarContext";
-import useCtrlItems, {
-  TodoItemType,
-  TodoStatus,
-} from "@/app/hooks/useCtrlItems";
+import { TodoItemType } from "@/app/hooks/useCtrlItems";
+
+interface DateInfo {
+  year: string;
+  month: string;
+  day: string;
+}
 
 interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
-  currentDate: any;
+  currentDate: DateInfo;
   handleOpenDetail: (item: CalendarItem) => void;
   items: TodoItemType[];
   handleUpdateItem: (

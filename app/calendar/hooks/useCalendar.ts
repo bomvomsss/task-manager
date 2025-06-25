@@ -55,6 +55,7 @@ export default function useCalendar(): CalendarContextType {
     }
     return days;
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (currentDate?.year && currentDate?.month) {
       const days = generateDaysInMonth(currentDate.year, currentDate.month);

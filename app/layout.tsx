@@ -3,6 +3,21 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./components/Navigation";
 import { TodoProvider } from "./context/TodoContext";
+import { Noto_Sans_KR, Roboto } from "next/font/google";
+
+const notoSans = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  display: "swap",
+  variable: "--font-noto",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  display: "swap",
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
   title: "Task Manager",
@@ -18,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ko'>
+    <html lang='ko' className={`${notoSans.variable} ${roboto.variable}`}>
       <head>
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
