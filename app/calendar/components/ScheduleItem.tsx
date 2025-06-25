@@ -1,10 +1,12 @@
-import { TodoItemType } from "@/app/hooks/useCtrlItems";
+import { TodoItemType, TodoStatus } from "@/app/hooks/useCtrlItems";
 
 export interface ScheduleItemProps extends TodoItemType {
   onClick: () => void;
   isStart?: boolean;
   isEnd?: boolean;
   currentDate?: string;
+  draggable?: boolean;
+  onDragStart?: (e: React.DragEvent) => void;
 }
 
 const statusColors = {
@@ -14,12 +16,23 @@ const statusColors = {
 };
 
 export default function ScheduleItem({
+  id,
   title,
   status,
   onClick,
-}: ScheduleItemProps) {
+  draggable,
+  onDragStart,
+}: ScheduleItemProps & { onDropDateChange?: (newDate: string) => void }) {
   return (
-    <div className={`schedule-item ${statusColors[status]}`} onClick={onClick}>
+    <div
+      className={`schedule-item ${statusColors[status]}`}
+      onClick={onClick}
+      draggable={draggable}
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/plain", id);
+        if (onDragStart) onDragStart(e);
+      }}
+    >
       {title}
     </div>
   );

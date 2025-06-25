@@ -1,8 +1,8 @@
 "use client";
+import supabase from "@/lib/supabaseClient";
 import useCalendarContext from "../../calendar/hooks/useCalendarContext";
 import { useEffect, useState } from "react";
 import { TodoItemType } from "@/app/hooks/useCtrlItems";
-import supabase from "@/lib/supabaseClient";
 import { Container } from "react-bootstrap";
 
 export default function TodayTodo() {

@@ -4,9 +4,13 @@ import useCalendarContext from "../hooks/useCalendarContext";
 import WeekRow from "./WeekRow";
 
 export default function CalendarBody() {
-  const { daysInMonth, currentDate, items, handleOpenDetail } =
-    useCalendarContext();
-
+  const {
+    daysInMonth,
+    currentDate,
+    items,
+    handleOpenDetail,
+    handleUpdateItem,
+  } = useCalendarContext();
   // 요일 헤더
   const weeks = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -51,8 +55,10 @@ export default function CalendarBody() {
               key={`week-${weekIdx}`}
               week={week}
               weekTodos={weekTodos}
-              handleOpenDetail={handleOpenDetail}
               currentDate={currentDate}
+              handleOpenDetail={handleOpenDetail}
+              items={items}
+              handleUpdateItem={handleUpdateItem}
             />
           );
         })}

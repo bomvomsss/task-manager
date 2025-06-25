@@ -44,3 +44,10 @@ button {
 .nav-link {
   box-sizing: border-box;
 }
+h1 {
+  padding: 30px 40px;
+}
+h1 > a {
+  text-decoration: none;
+  color: #000;
+}

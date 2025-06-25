@@ -125,10 +125,24 @@ export default function useCtrlItems() {
     requestDelete(statusId, String(item.id));
   };
 
-  const updateItem = (id: string, newDates: string[]) => {
+  const handleUpdateItem = (
+    id: string,
+    newDates: { start_date: string; end_date: string }
+  ) => {
     setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, dates: newDates } : item))
+      prev.map((item) => (item.id === id ? { ...item, ...newDates } : item))
     );
+
+    supabase
+      .from("todos")
+      .update({
+        start_date: newDates.start_date,
+        end_date: newDates.end_date,
+      })
+      .eq("id", id)
+      .then(({ error }) => {
+        if (error) console.error("Failed to update dates:", error);
+      });
   };
 
   return {
@@ -140,6 +154,6 @@ export default function useCtrlItems() {
     handleCloseDetail,
     handleSaveItem,
     handleDeleteItem,
-    updateItem,
+    handleUpdateItem,
   };
 }

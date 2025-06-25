@@ -93,7 +93,7 @@ export default function useAddItems({ item, onSave, onDelete }: AddItemProps) {
 
 ## 💟서버
 
-supabase 무료 플랜
+supabase 이용하여 데이터 테이블을 만들고, 필요한 컬럼 생성
 
 ### 서버 연결
 

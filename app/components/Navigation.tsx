@@ -6,12 +6,14 @@ export default function Navigation() {
   return (
     <div id='navBar' className={"bg-body-tertiary"}>
       <div className='brand'>
-        <h1>Task Manager</h1>
+        <h1>
+          <a href='/'>Task Manager</a>
+        </h1>
       </div>
       <Nav defaultActiveKey='/' className='flex-column'>
         <Nav.Item>
-          <Nav.Link as={Link} className='py-3' href='/main'>
-            Main
+          <Nav.Link as={Link} className='py-3' href='/dashboard'>
+            Dash Board
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -20,8 +22,8 @@ export default function Navigation() {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link as={Link} className='py-3' href='/dashboard'>
-            Dash Board
+          <Nav.Link as={Link} className='py-3' href='/main'>
+            Main
           </Nav.Link>
         </Nav.Item>
       </Nav>

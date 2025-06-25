@@ -15,6 +15,12 @@ export default function BoardBody({
   handleDragStart,
   handleDrop,
 }: BoardBodyProps) {
+  const today = new Date();
+  const yyyyMMdd = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(today.getDate()).padStart(2, "0")}`;
+
   return (
     <div id='dashBoard'>
       <Card
@@ -63,7 +69,11 @@ export default function BoardBody({
         <Card.Header className='done'>완료</Card.Header>
         <div className='card-body'>
           {items
-            .filter((item) => item.status === "done")
+            .filter(
+              (item) =>
+                item.status === "done" &&
+                item.end_date >= yyyyMMdd // 오늘 이후(포함)만 표시
+            )
             .map((item) => (
               <TodoItem
                 key={item.id}

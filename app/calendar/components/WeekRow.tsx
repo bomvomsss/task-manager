@@ -1,19 +1,30 @@
 import ScheduleItem from "./ScheduleItem";
 import useTrackMatrix from "../hooks/useTrackMatrix";
 import { CalendarItem, CalendarDate } from "../hooks/useCalendarContext";
+import useCtrlItems, {
+  TodoItemType,
+  TodoStatus,
+} from "@/app/hooks/useCtrlItems";
 
 interface WeekRowProps {
   week: CalendarDate[];
   weekTodos: CalendarItem[];
-  handleOpenDetail: (item: CalendarItem) => void;
   currentDate: any;
+  handleOpenDetail: (item: CalendarItem) => void;
+  items: TodoItemType[];
+  handleUpdateItem: (
+    id: string,
+    newDates: { start_date: string; end_date: string }
+  ) => void;
 }
 
 export default function WeekRow({
   week,
   weekTodos,
-  handleOpenDetail,
   currentDate,
+  handleOpenDetail,
+  items,
+  handleUpdateItem,
 }: WeekRowProps) {
   const trackMatrix = useTrackMatrix(week, weekTodos);
   return (
@@ -41,12 +52,53 @@ export default function WeekRow({
           <div
             className={classNames}
             key={`dayItem-${date.year}-${date.month}-${date.day}`}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const todoId = e.dataTransfer.getData("text/plain");
+              const newDateStr = date.date; // yyyy-mm-dd 형태
+              // 전체 items에서 todo 찾기
+              const todo = items.find((t) => t.id === todoId);
+              if (!todo) return;
+              const diff =
+                new Date(todo.end_date).getTime() -
+                new Date(todo.start_date).getTime();
+              const newStart = new Date(newDateStr);
+              const newEnd = new Date(newStart.getTime() + diff);
+              handleUpdateItem(todo.id, {
+                start_date: newStart.toISOString().split("T")[0],
+                end_date: newEnd.toISOString().split("T")[0],
+              });
+            }}
           >
             <span>{date.day}</span>
             {trackMatrix.map((track, rowIdx) => {
               const todo = track[dayIdx];
               if (!todo || dayIdx !== todo.startIdx)
-                return <div key={rowIdx} className='itemBar' />;
+                return (
+                  <div
+                    key={rowIdx}
+                    className='itemBar'
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const todoId = e.dataTransfer.getData("text/plain");
+                      const newDateStr = date.date; // yyyy-mm-dd 형태
+                      // 전체 items에서 todo 찾기
+                      const todo = items.find((t) => t.id === todoId);
+                      if (!todo) return;
+                      const diff =
+                        new Date(todo.end_date).getTime() -
+                        new Date(todo.start_date).getTime();
+                      const newStart = new Date(newDateStr);
+                      const newEnd = new Date(newStart.getTime() + diff);
+                      handleUpdateItem(todo.id, {
+                        start_date: newStart.toISOString().split("T")[0],
+                        end_date: newEnd.toISOString().split("T")[0],
+                      });
+                    }}
+                  />
+                );
               const spanLength = todo.endIdx - todo.startIdx + 1;
               return (
                 <div
@@ -56,6 +108,24 @@ export default function WeekRow({
                     width: `calc(${spanLength * 100}% + ${
                       (spanLength - 1) * 15
                     }px)`,
+                  }}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const todoId = e.dataTransfer.getData("text/plain");
+                    const newDateStr = date.date; // yyyy-mm-dd 형태
+                    // 전체 items에서 todo 찾기
+                    const todo = items.find((t) => t.id === todoId);
+                    if (!todo) return;
+                    const diff =
+                      new Date(todo.end_date).getTime() -
+                      new Date(todo.start_date).getTime();
+                    const newStart = new Date(newDateStr);
+                    const newEnd = new Date(newStart.getTime() + diff);
+                    handleUpdateItem(todo.id, {
+                      start_date: newStart.toISOString().split("T")[0],
+                      end_date: newEnd.toISOString().split("T")[0],
+                    });
                   }}
                 >
                   <ScheduleItem
@@ -67,6 +137,10 @@ export default function WeekRow({
                     contents={todo.contents}
                     onClick={() => {
                       handleOpenDetail(todo);
+                    }}
+                    draggable
+                    onDragStart={(e) => {
+                      e.dataTransfer.setData("text/plain", todo.id);
                     }}
                   />
                 </div>
