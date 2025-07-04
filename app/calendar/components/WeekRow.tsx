@@ -138,7 +138,7 @@ export default function WeekRow({
                     start_date={todo.start_date}
                     end_date={todo.end_date}
                     contents={todo.contents}
-                    onClick={() => {
+                    onDoubleClick={() => {
                       handleOpenDetail(todo);
                     }}
                     draggable

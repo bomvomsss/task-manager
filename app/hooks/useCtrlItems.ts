@@ -123,6 +123,7 @@ export default function useCtrlItems() {
   const handleDeleteItem = (item: TodoItemType) => {
     const statusId = toStatusId(item.status);
     requestDelete(statusId, String(item.id));
+    setSelectedItem(null);
   };
 
   const handleUpdateItem = (

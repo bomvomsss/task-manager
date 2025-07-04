@@ -1,6 +1,6 @@
 import useCalendarContext from "../hooks/useCalendarContext";
 import { Container, Button } from "react-bootstrap";
-import { BsChevronRight, BsChevronLeft, BsPlusLg } from "react-icons/bs";
+import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
 
 interface CalHeadProps {
   onAddClick: () => void;
@@ -10,22 +10,16 @@ export default function CalendarHeader({ onAddClick }: CalHeadProps) {
   const { currentDate, dispatch } = useCalendarContext();
 
   return (
-    <Container>
+    <Container className='calHead'>
       <div className='calBtnGroup'>
+        <button onClick={dispatch.handlePrevMonth} className='calArr'>
+          <BsChevronLeft />
+        </button>
         <div className='btnWrap years'>
-          <button onClick={dispatch.handlePrevYear} className='calArr'>
-            <BsChevronLeft />
-          </button>
-          <span>{currentDate.year}</span>
-          <button onClick={dispatch.handleNextYear} className='calArr'>
-            <BsChevronRight />
-          </button>
+          <span>{currentDate.year} 년</span>
         </div>
         <div className='btnWrap months'>
-          <button onClick={dispatch.handlePrevMonth} className='calArr'>
-            <BsChevronLeft />
-          </button>
-          <span>{currentDate.month}</span>
+          <span>{currentDate.month} 월</span>
           <button onClick={dispatch.handleNextMonth} className='calArr'>
             <BsChevronRight />
           </button>
@@ -35,7 +29,7 @@ export default function CalendarHeader({ onAddClick }: CalHeadProps) {
           className='addBtn'
           onClick={onAddClick}
         >
-          <BsPlusLg />
+          추가
         </Button>
       </div>
     </Container>

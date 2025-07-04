@@ -1,8 +1,12 @@
+.calHead.container {
+  margin-top: 50px;
+}
 .container {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .calBtnGroup {
   display: flex;
+  align-items: center;
 }
 .btnWrap {
   display: flex;
@@ -68,8 +72,7 @@
 }
 .addBtn {
   margin-left: auto;
-  height: fit-content;
-  padding: 1px 5px;
+  padding: 10px 20px;
 }
 .itemBar {
   height: 45px;
