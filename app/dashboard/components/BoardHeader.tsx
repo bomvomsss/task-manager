@@ -1,4 +1,4 @@
-import { BsPlusLg } from "react-icons/bs";
+import { BsFillCalendarHeartFill } from "react-icons/bs";
 
 interface BoardHeaderProps {
   onAddClick: () => void;
@@ -7,9 +7,9 @@ interface BoardHeaderProps {
 export default function BoardHeader({ onAddClick }: BoardHeaderProps) {
   return (
     <div id='boardHeader'>
-      <h3>대시보드</h3>
-      <button className='btn btn-outline-primary' onClick={onAddClick}>
-        <BsPlusLg />
+      {/* <h3>대시보드</h3> */}
+      <button className='plus-btn' onClick={onAddClick}>
+        <BsFillCalendarHeartFill />
       </button>
     </div>
   );

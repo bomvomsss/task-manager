@@ -16,18 +16,18 @@ export default function BoardBody({
   handleDrop,
 }: BoardBodyProps) {
   const today = new Date();
-  const yyyyMMdd = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}-${String(today.getDate()).padStart(2, "0")}`;
+  const yyyyMMdd = `${today.getFullYear()}-${String(
+    today.getMonth() + 1
+  ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
   return (
     <div id='dashBoard'>
       <Card
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "todo")}
+        className='toDo'
       >
-        <Card.Header className='toDo'>할 일</Card.Header>
+        <Card.Header>TO DO</Card.Header>
         <div className='card-body'>
           {items
             .filter((item) => item.status === "todo")
@@ -46,8 +46,9 @@ export default function BoardBody({
       <Card
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "doing")}
+        className='doing'
       >
-        <Card.Header className='doing'>진행중</Card.Header>
+        <Card.Header>DOING</Card.Header>
         <div className='card-body'>
           {items
             .filter((item) => item.status === "doing")
@@ -65,14 +66,13 @@ export default function BoardBody({
       <Card
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => handleDrop(e, "done")}
+        className='done'
       >
-        <Card.Header className='done'>완료</Card.Header>
+        <Card.Header>DONE</Card.Header>
         <div className='card-body'>
           {items
             .filter(
-              (item) =>
-                item.status === "done" &&
-                item.end_date >= yyyyMMdd // 오늘 이후(포함)만 표시
+              (item) => item.status === "done" && item.end_date >= yyyyMMdd // 오늘 이후(포함)만 표시
             )
             .map((item) => (
               <TodoItem

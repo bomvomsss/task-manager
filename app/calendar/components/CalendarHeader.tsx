@@ -1,6 +1,10 @@
 import useCalendarContext from "../hooks/useCalendarContext";
 import { Container, Button } from "react-bootstrap";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import {
+  BsChevronRight,
+  BsChevronLeft,
+  BsFillCalendarHeartFill,
+} from "react-icons/bs";
 
 interface CalHeadProps {
   onAddClick: () => void;
@@ -29,7 +33,7 @@ export default function CalendarHeader({ onAddClick }: CalHeadProps) {
           className='addBtn'
           onClick={onAddClick}
         >
-          추가
+          <BsFillCalendarHeartFill />
         </Button>
       </div>
     </Container>

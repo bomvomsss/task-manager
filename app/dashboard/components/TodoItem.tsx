@@ -30,7 +30,7 @@ export default function TodoItem({
       onDragStart={onDragStart}
     >
       {isOverdue && (
-        <BsExclamationCircle color='red' style={{ marginRight: 4 }} />
+        <BsExclamationCircle color='red' style={{ marginRight: 6 }} />
       )}
       {title}
     </div>

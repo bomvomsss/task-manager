@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./globals.css";
 import Navigation from "./components/Navigation";
 import { TodoProvider } from "./context/TodoContext";
 import { Noto_Sans_KR, Roboto } from "next/font/google";

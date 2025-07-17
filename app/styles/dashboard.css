@@ -1,53 +1,74 @@
 #boardHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: end;
   padding-top: 50px;
+}
+.plus-btn {
+  border: 3px solid #a876ee;
+  color: #a876ee;
+  border-radius: 100px;
+  padding: 10px 12px 10px 12px;
+  font-size: 25px;
+  line-height: 19px;
 }
 #dashBoard {
   display: flex;
   justify-content: space-between;
-  column-gap: 20px;
+  column-gap: 50px;
   margin: 50px 0 0;
   min-height: calc(100vh - 300px);
 }
 .card {
   flex: 1;
-  border: none;
+  border: 4px solid #a4cbf4;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 15px 15px #ceb1f796;
+}
+.doing {
+  border-color: #5e4387;
+}
+.done {
+  border-color: #77ac83;
 }
 .card-body {
   height: 100%;
 }
 .card-header {
   line-height: 50px;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 30px;
+  font-weight: 700;
   text-align: center;
+  border-bottom: none;
+  text-shadow: 3px 3px #fff;
 }
-.card-header.toDo {
-  background: #a4cbf4;
+.toDo .card-header {
+  color: #a4cbf4;
 }
-.card-header.doing {
-  background: #5e4387;
+.doing .card-header {
+  color: #5e4387;
 }
-.card-header.done {
-  background: #77ac83;
+.done .card-header {
+  color: #77ac83;
 }
-.toDo + .card-body {
-  background: #a4cbf43e;
+.toDo .card-header,
+.toDo .card-body {
+  background: #e6f2ff;
 }
-.doing + .card-body {
-  background: #5e43873e;
+.doing .card-header,
+.doing .card-body {
+  background: #e6d9f8;
 }
-.done + .card-body {
-  background: #77ac833e;
+.done .card-header,
+.done .card-body {
+  background: #cfece2;
 }
 .todo-item {
   cursor: pointer;
-  padding: 20px 30px;
+  padding: 20px 30px 20px 20px;
   margin: 10px 0;
   border-radius: 10px;
   background: #fff;
-  border: 2px solid #4c4c4c;
+  box-shadow: 1px 1px 3px #636363;
+  font-weight: 500;
 }
