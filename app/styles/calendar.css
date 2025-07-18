@@ -12,6 +12,7 @@
 .btnWrap span {
   font-size: 35px;
   margin: 0 15px;
+  font-weight: 500;
 }
 .weekWrapper {
   display: grid;
@@ -20,8 +21,8 @@
 }
 .dayWrapper {
   min-height: 70vh;
-  border-left: 1px solid #ddd;
-  border-top: 1px solid #ddd;
+  border-left: 2px solid #a876ee33;
+  border-top: 2px solid #a876ee33;
   display: grid;
   background: #fff;
 }
@@ -35,8 +36,8 @@
 }
 .dayItem {
   padding: 15px 8px;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
+  border-right: 2px solid #a876ee33;
+  border-bottom: 2px solid #a876ee33;
   align-self: auto;
   flex: 1;
   font-weight: 400;
