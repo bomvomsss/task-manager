@@ -15,7 +15,10 @@ export default function TodoItem({
   onDoubleClick,
   draggable,
   onDragStart,
+  start_date,
   end_date,
+  contents,
+  tags,
 }: TodoItemProps) {
   const itemRef = useRef<HTMLDivElement>(null);
   const todayStr = new Date().toISOString().split("T")[0];
@@ -32,7 +35,22 @@ export default function TodoItem({
       {isOverdue && (
         <BsExclamationCircle color='red' style={{ marginRight: 6 }} />
       )}
-      {title}
+      <div className='todo-title'>{title}</div>
+      <div className='todo-content'>{contents}</div>
+      <div className='todo-dates'>
+        {start_date && <span>{getDateOnly(start_date)}</span>}
+        {start_date && end_date && <span> ― </span>}
+        {end_date && <span>{getDateOnly(end_date)}</span>}
+      </div>
+      <div className='todo-tags-list'>
+        {Array.isArray(tags)
+          ? tags.map((tag: string, idx: number) => (
+              <span key={idx} className='todo-tags'>
+                {tag}
+              </span>
+            ))
+          : tags}
+      </div>
     </div>
   );
 }

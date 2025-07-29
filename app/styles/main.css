@@ -1,3 +1,20 @@
+.list-group-item {
+  padding: 30px;
+}
 .current-date-details .badge {
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 18px;
+}
+.todo-badge-list {
+  display: flex;
+  gap: 10px;
+}
+.todo-badge {
+  background: #fee199;
+  color: #fff;
+  font-size: 13px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  color: #000;
+  font-weight: 400;
 }

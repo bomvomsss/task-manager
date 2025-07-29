@@ -55,9 +55,9 @@ export default function TodayTodo() {
         {matchedTodos.length === 0 ? (
           <p>일정이 없습니다.</p>
         ) : (
-          <ul className='list-group list-group'>
+          <ul className='list-group'>
             {matchedTodos.map((todo) => (
-              <li key={todo.id} className='list-group-item pt-3'>
+              <li key={todo.id} className='list-group-item'>
                 <div className='d-flex align-items-center'>
                   <span
                     className={`badge rounded-pill ${
@@ -73,6 +73,15 @@ export default function TodayTodo() {
                   <h5 className='ms-2'>{todo.title}</h5>
                 </div>
                 <p className='ms-2 mt-3'>{todo.contents}</p>
+                <div className='todo-badge-list'>
+                  {Array.isArray(todo.tags)
+                    ? todo.tags.map((tag: string, idx: number) => (
+                        <span key={idx} className='todo-badge'>
+                          {tag}
+                        </span>
+                      ))
+                    : todo.tags}
+                </div>
               </li>
             ))}
           </ul>

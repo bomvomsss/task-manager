@@ -1,10 +1,6 @@
 import useCalendarContext from "../hooks/useCalendarContext";
-import { Container, Button } from "react-bootstrap";
-import {
-  BsChevronRight,
-  BsChevronLeft,
-  BsFillCalendarHeartFill,
-} from "react-icons/bs";
+import { Button } from "react-bootstrap";
+import { BsChevronRight, BsChevronLeft, BsCalendarPlus } from "react-icons/bs";
 
 interface CalHeadProps {
   onAddClick: () => void;
@@ -14,7 +10,7 @@ export default function CalendarHeader({ onAddClick }: CalHeadProps) {
   const { currentDate, dispatch } = useCalendarContext();
 
   return (
-    <Container className='calHead'>
+    <div className='calHead'>
       <div className='calBtnGroup'>
         <button onClick={dispatch.handlePrevMonth} className='calArr'>
           <BsChevronLeft />
@@ -33,9 +29,9 @@ export default function CalendarHeader({ onAddClick }: CalHeadProps) {
           className='addBtn'
           onClick={onAddClick}
         >
-          <BsFillCalendarHeartFill />
+          <BsCalendarPlus />
         </Button>
       </div>
-    </Container>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 :root {
-  --background: #fffdd1;
+  --background: #e5eff3;
   --foreground: #171717;
 }
 
@@ -23,29 +23,37 @@ button {
   background: none;
   border: none;
 }
-#mainWrap {
-  display: flex;
-  margin-left: 15vw;
-}
 #navBar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
-  width: 13vw;
-  height: 100vh;
-  border-right: 1px solid #ededed;
+  width: 100vw;
+}
+.nav.flex {
+  padding: 10px 30px 0;
 }
 .brand {
   border-bottom: 1px solid #ededed;
 }
 .nav-item {
-  border-bottom: 1px solid #ededed;
+  opacity: 0.5;
+}
+.nav-item.on {
+  opacity: 1;
+  border-bottom: 3px solid #0d6efd;
 }
 .nav-link {
   box-sizing: border-box;
+  font-weight: 400;
+  color: #000;
+}
+.nav-item.on .nav-link {
+  font-weight: 600;
+  color: #0d6efd;
 }
 h1 {
-  padding: 30px 40px;
+  padding: 20px 30px;
+  font-size: 24px;
 }
 h1 > a {
   text-decoration: none;

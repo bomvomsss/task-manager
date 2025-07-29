@@ -1,5 +1,4 @@
 "use client";
-import { Container } from "react-bootstrap";
 import useCalendarContext from "../hooks/useCalendarContext";
 import WeekRow from "./WeekRow";
 
@@ -21,7 +20,7 @@ export default function CalendarBody() {
   }
 
   return (
-    <Container>
+    <div className='calendarbody-container'>
       <div className='weekWrapper'>
         {weeks.map((week: string, index) => (
           <div
@@ -63,6 +62,6 @@ export default function CalendarBody() {
           );
         })}
       </div>
-    </Container>
+    </div>
   );
 }

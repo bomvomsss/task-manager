@@ -1,5 +1,9 @@
-.calHead.container {
-  margin-top: 50px;
+.calHead {
+  padding: 20px 100px 0;
+}
+.calArr {
+  font-size: 25px;
+  line-height: 25px;
 }
 .calBtnGroup {
   display: flex;
@@ -10,19 +14,22 @@
   align-items: center;
 }
 .btnWrap span {
-  font-size: 35px;
-  margin: 0 15px;
+  font-size: 25px;
+  margin: 0 10px;
   font-weight: 500;
+}
+.calendarbody-container {
+  padding: 30px 100px 100px;
 }
 .weekWrapper {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 50px 0 30px;
+  padding: 0 0 30px;
 }
 .dayWrapper {
   min-height: 70vh;
-  border-left: 2px solid #a876ee33;
-  border-top: 2px solid #a876ee33;
+  border-left: 1px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
   display: grid;
   background: #fff;
 }
@@ -36,8 +43,8 @@
 }
 .dayItem {
   padding: 15px 8px;
-  border-right: 2px solid #a876ee33;
-  border-bottom: 2px solid #a876ee33;
+  border-right: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
   align-self: auto;
   flex: 1;
   font-weight: 400;
@@ -64,16 +71,16 @@
   /* background: #f5eaffa9; */
   font-weight: 900;
 }
-.today {
-  background: var(--background);
-}
 .today span {
   font-weight: 900;
+  background: #e7c8ff;
+  border-radius: 40px;
+  padding: 5px 8px;
 }
 .addBtn {
   margin-left: auto;
-  border: 3px solid #a876ee;
-  color: #a876ee;
+  border: 2px solid #257fd9;
+  color: #257fd9;
   border-radius: 100px;
   padding: 10px 12px 10px 12px;
   font-size: 25px;

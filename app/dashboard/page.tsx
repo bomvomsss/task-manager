@@ -1,7 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
 import "../styles/dashboard.css";
-import { Container } from "react-bootstrap";
 import BoardHeader from "./components/BoardHeader";
 import AddItem from "../components/AddItem";
 import useCtrlItems, { TodoItemType, TodoStatus } from "../hooks/useCtrlItems";
@@ -59,7 +58,7 @@ export default function DashBoard() {
     }
   };
   return (
-    <Container>
+    <div className="dashboard-container">
       <BoardHeader onAddClick={handleAddItem} />
       <AddItem
         show={!!selectedItem}
@@ -75,6 +74,6 @@ export default function DashBoard() {
         handleDragStart={handleDragStart}
         handleDrop={handleDrop}
       />
-    </Container>
+    </div>
   );
 }
