@@ -21,6 +21,15 @@
             </PendingDiffInfo>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/page.tsx">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/app/page.tsx" />
+              <option name="originalContent" value="import { permanentRedirect } from &quot;next/navigation&quot;;&#10;&#10;export default function CatchAll({ params }: { params: { slug: string[] } }) {&#10;  const path = params.slug.join(&quot;/&quot;);&#10;  if (path === &quot;old-path&quot;) permanentRedirect(&quot;/new-path&quot;);&#10;  return &lt;h1&gt;404&lt;/h1&gt;;&#10;}&#10;" />
+              <option name="updatedContent" value="import { permanentRedirect } from &quot;next/navigation&quot;;&#10;&#10;export default function CatchAll({ params }: { params?: { slug?: string[] } }) {&#10;  const path = params?.slug?.join(&quot;/&quot;) ?? &quot;&quot;;&#10;  if (path === &quot;old-path&quot;) permanentRedirect(&quot;/new-path&quot;);&#10;  return &lt;h1&gt;404&lt;/h1&gt;;&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
