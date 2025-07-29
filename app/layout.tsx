@@ -21,7 +21,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "Task Manager",
-  description: "내가 쓰려고 만든 Task Manager",
+  description: "Task Manager",
   icons: {
     icon: "/favicon.ico",
   },
