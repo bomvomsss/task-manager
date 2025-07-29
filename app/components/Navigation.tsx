@@ -13,17 +13,17 @@ export default function Navigation() {
         </h1>
       </div>
       <Nav className='flex'>
-        <Nav.Item className={pathname === "/main" ? "on" : ""}>
+        <Nav.Item className={pathname === "/main/" ? "on" : ""}>
           <Nav.Link as={Link} className='py-3' href='/main'>
             Main
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item className={pathname === "/dashboard" ? "on" : ""}>
+        <Nav.Item className={pathname === "/dashboard/" ? "on" : ""}>
           <Nav.Link as={Link} className='py-3' href='/dashboard'>
             Dash Board
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item className={pathname === "/calendar" ? "on" : ""}>
+        <Nav.Item className={pathname === "/calendar/" ? "on" : ""}>
           <Nav.Link as={Link} className='py-3' href='/calendar'>
             Calendar
           </Nav.Link>
